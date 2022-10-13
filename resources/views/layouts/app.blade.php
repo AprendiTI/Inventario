@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="{{url('/')}}/images/LogoInd.png" type="image/x-ico" />
+	  <link rel="shortcut icon" href="{{url('/')}}/images/LogoInd.png" type="image/x-ico" />
     {{-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> --}}
 
     <title>@yield('tittle')</title>
@@ -26,6 +26,12 @@
     <link href="{{url('/')}}/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="{{url('/')}}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="{{url('/')}}/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -37,7 +43,7 @@
   <body class="nav-md footer_fixed">
     <div class=" container-l body">
       <div class="main_container-l">
-        <div class="col-md-3 left_col">
+        <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
               <a href="{{route('home')}}" class="site_title"><img src="{{url('/')}}/images/LogoInd.png" alt="LogoIvanAgro"> <span>IvanAgro</span></a>
@@ -64,7 +70,7 @@
                   <li><a href="{{route('home')}}"><i class="fa fa-home"></i>inicio</span></a>
                   <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
                   <li><a href="{{route('user.create')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
-                  <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> conteos</span></a>
+                  <li><a href="#"><i class="fa fa-male"></i> conteos</span></a>
                     {{-- <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
                       <li><a href="index2.html">Dashboard2</a></li>
@@ -78,7 +84,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                <span class="text-light glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
 
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -91,7 +97,7 @@
 
         <!-- top navigation -->
         <div class="top_nav">
-            <div class="nav_menu">
+            <div class="nav_menu menu_fixed">
                 <div class="nav toggle">
                   <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                 </div>
@@ -118,13 +124,7 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          {{-- <div class="">
-            <div class="page-title">
-              <div class="title_left"> --}}
-                    @yield('content')
-              {{-- </div>
-            </div>
-          </div> --}}
+            @yield('content')
         </div>
         <!-- /page content -->
 
@@ -139,6 +139,8 @@
       </div>
     </div>
 
+  
+
     <!-- jQuery -->
     <script src="{{url('/')}}/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -152,5 +154,54 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{{url('/')}}/js/custom.min.js"></script>
+    
+    <!-- iCheck -->
+    <script src="{{url('/')}}/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="{{url('/')}}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="{{url('/')}}/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="{{url('/')}}/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="{{url('/')}}/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="{{url('/')}}/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+
+    <script>
+      
+      $(document).ready(function() {
+        var table = $('#tbl').DataTable({
+            "responsive": false,
+            "language": {
+                "lengthMenu": "Mostrar"+ `
+                    <select class="custom-select custom-select-sm form-select form-select-sm">
+                        <option value="10" selected>10</option>    
+                        <option value="25">25</option>    
+                        <option value="50">50</option>    
+                        <option value="100">100</option>    
+                        <option value="-1">Todos</option>
+                    </select>
+                ` +"registros por página",
+                "zeroRecords": "No hay registros por mostrar",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    'next': 'Siguiente',
+                    'previous': 'Anterior'
+                }
+            }
+        });
+      });
+    </script>
   </body>
 </html>

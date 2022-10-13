@@ -24,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $invoices = DB::connection('sqlsrv2')->table('DAT_SCOMPART')->where('SCO_ARTICOLO', '<>', '')
+        ->select('SCO_UDC','SCO_ARTICOLO','SCO_DVER')->get();
+        
+        $WMS = json_decode( json_encode( $invoices),true);
+        // dd($WMS);
+        return view('home', compact('WMS'));
     }
 }

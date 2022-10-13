@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -41,10 +46,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $input = $request->all();
-        dd($input);
+        // dd($input);
+        
+        return User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'Rol_id' => $input['Rol_id'],
+            'State' => 1,
+            'password' => Hash::make($input['password']),
+        ]);
     }
 
     /**
