@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CopyController;
 use Illuminate\Support\Facades\Route;
 use app\Models\Roles;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ Auth::routes();
 
 Route::resources([
     'user' => UserController::class,
+    'copia' => CopyController::class,
 ]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

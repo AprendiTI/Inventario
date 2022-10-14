@@ -37,7 +37,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
     <link href="{{url('/')}}/css/custom.css" rel="stylesheet">
-    
+    <style>
+      
+     body{
+        background-image: url("{{url('/')}}/img/fondologin.jpg") !important;
+        width: 100%;
+        height: 100%;
+        background-attachment: fixed;
+      }
+      .nav_menu2{
+        background-image: url("{{url('/')}}/img/sidebar.png")
+      }
+    </style>
   </head>
 
   <body class="nav-md footer_fixed">
@@ -69,7 +80,7 @@
                 <ul class="nav side-menu">
                   <li><a href="{{route('home')}}"><i class="fa fa-home"></i>inicio</span></a>
                   <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
-                  <li><a href="{{route('user.create')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
+                  <li><a href="{{route('copia.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
                   <li><a href="#"><i class="fa fa-male"></i> conteos</span></a>
                     {{-- <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
@@ -97,17 +108,17 @@
 
         <!-- top navigation -->
         <div class="top_nav">
-            <div class="nav_menu menu_fixed">
+            <div class="nav_menu nav_menu2 menu_fixed">
                 <div class="nav toggle">
-                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                  <a id="menu_toggle" style="color:white;"><i class="fa fa-bars"></i></a>
                 </div>
                 <nav class="nav navbar-nav">
                 <ul class=" navbar-right">
-                  <li class="nav-item dropdown open" style="padding-left: 15px;">
+                  <li class="nav-item dropdown open text-light" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                         {{ Auth::user()->name }}
                     </a>
-                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-usermenu pull-right text-light" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> Perfil </a>
                       <a class="dropdown-item"  href="{{ route('logout') }}"
                         onclick="event.preventDefault();

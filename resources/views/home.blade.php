@@ -11,17 +11,17 @@
                 <div class="x_title">
                     <h2>Datos WMS<small>General</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    {{-- <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li> --}}
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        {{-- <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li> --}}
+                        {{-- <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li> --}}
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -32,14 +32,16 @@
                                 <table id="tbl" class="table table-striped table-hover table-bordered nowrap" cellspacing="0" width="100%">
                                     <thead class="table-dark">
                                         <tr>
+                                            <th>#</th>
                                             <th>UDC</th>
                                             <th>Codigo</th>
                                             <th>Vencimiento</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($WMS as $val)
+                                        @foreach($WMS as $key => $val)
                                             <tr>
+                                                <td>{{$key}}</td>
                                                 <td>{{$val['SCO_UDC']}}</td>
                                                 <td>{{$val['SCO_ARTICOLO']}}</td>
                                                 <td>{{$val['SCO_DVER']}}</td>

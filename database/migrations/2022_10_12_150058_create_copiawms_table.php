@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('CopiaWMS', function (Blueprint $table) {
             $table->id();
             $table->String('ItemCode', 50);
-            $table->String('Descirption', 50);
-            $table->String('BarCode', 45);
-            $table->Integer('Amount');
+            $table->String('Descirption', 100);
+            $table->String('BarCode', 500);
+            $table->double('Amount', 11,3);
             $table->String('Lote', 50);
-            $table->DateTime('DateExpiration');
+            $table->Date('DateExpiration');
             $table->String('Zone', 50);
             $table->String('Hallway', 50);
-            $table->String('Compartment', 50);
+            $table->double('Compartment', 15,0);
             $table->timestamps();
         });
     }

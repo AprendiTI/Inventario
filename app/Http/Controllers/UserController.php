@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,13 +55,15 @@ class UserController extends Controller
         $input = $request->all();
         // dd($input);
         
-        return User::create([
+        $create = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'Rol_id' => $input['Rol_id'],
             'State' => 1,
             'password' => Hash::make($input['password']),
         ]);
+
+        return redirect()-route('user.index');
     }
 
     /**

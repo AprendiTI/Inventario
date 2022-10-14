@@ -986,7 +986,6 @@
 
 .nav_menu {
   float: left;
-  background: #EDEDED;
   border-bottom: 1px solid #D9DEE4;
   margin-bottom: 10px;
   width: 100%;
@@ -1021,8 +1020,8 @@
   height: 100%;
   position: fixed; }
 
-body .container-l.body .right_col {
-  background: #F7F7F7; }
+/* body .container-l.body .right_col {
+  background: #F7F7F7; } */
 
 .nav-md .container-l.body .right_col {
   padding: 10px 20px 0;
@@ -1148,7 +1147,7 @@ body .container-l.body .right_col {
   max-width: 100%; }
 
 .navbar-nav > li > a, .navbar-brand, .navbar-nav > li > a {
-  color: #fff !important; }
+  color: rgb(255, 255, 255) !important; }
 
 body {
   color: #73879C;
@@ -1312,6 +1311,7 @@ a:hover, a:focus {
   margin-top: 0; }
 
 .nav > li {
+  color: rgb(255, 255, 255);
   position: relative;
   display: block; }
 
@@ -1424,7 +1424,7 @@ a:hover, a:focus {
   text-decoration: none; }
 
 .nav.navbar-nav > li > a {
-  color: #515356 !important; }
+  color: #080808 !important; }
 
 .nav.top_menu > li > a {
   position: relative;
@@ -1497,7 +1497,7 @@ a:hover, a:focus {
   line-height: 30px; }
 
 .main_menu_side {
-  padding: 0; }
+  padding: 5; }
 
 .bs-docs-sidebar .nav > li > a {
   display: block;
@@ -1688,6 +1688,10 @@ h2 {
   padding: 0 3px 6px;
   position: relative;
   width: 100%;
+  overflow: hidden;
+  overflow: auto;
+  max-height:30rem;
+  min-height:30rem;
   float: left;
   clear: both;
   margin-top: 5px; }
@@ -2107,7 +2111,7 @@ ul.msg_list li a .message {
   border-top-right-radius: 0; }
 
 .dropdown-menu > li > a {
-  color: #5A738E; }
+  color: #ffffff; }
 
 .navbar-nav .open .dropdown-menu {
   position: absolute;
@@ -2326,7 +2330,7 @@ span.right {
   padding: 0; }
 
 a.user-profile {
-  color: #5E6974 !important; }
+  color: #fbfbfb !important; }
 
 .user-profile img {
   width: 29px;
@@ -4434,7 +4438,18 @@ fieldset {
     margin-left: -5px;
     margin-right: -5px;
     padding-left: 5px;
-    padding-right: 5px; } }
+    padding-right: 5px; } 
+    .x_content {
+      padding: 0 3px 6px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      overflow: auto;
+      max-height:40rem;
+      min-height:40rem;
+      float: left;
+      clear: both;
+      margin-top: 5px; }}
 
 .cropper .docs-options .dropdown-menu {
   width: 100%; }
@@ -4840,7 +4855,19 @@ ul.notifications {
     padding: 2px 6px;
     position: absolute;
     right: -2px;
-    top: -6px; } }
+    top: -6px; } 
+    .x_content {
+      padding: 0 3px 6px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      overflow: auto;
+      max-height:50rem;
+      min-height:50rem;
+      float: left;
+      clear: both;
+      margin-top: 5px; }
+  }
 
 /** /PNotify **/
 /** FullCalendar **/
