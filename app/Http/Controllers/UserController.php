@@ -63,7 +63,7 @@ class UserController extends Controller
             'password' => Hash::make($input['password']),
         ]);
 
-        return redirect()-route('user.index');
+        return redirect()->route('user.index');
     }
 
     /**

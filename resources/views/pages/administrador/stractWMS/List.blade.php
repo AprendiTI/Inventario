@@ -11,7 +11,7 @@
                     <div class="x_title">
                         <a href="{{route('copia.create')}}" class="btn btn-outline-dark">Consultar inventario</a>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
