@@ -10,13 +10,14 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <a href="{{route('copia.create')}}" class="btn btn-outline-dark">Consultar inventario</a>
+                        <a href="{{route('asignar.create')}}" class="btn btn-outline-dark">Asignar</a>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content">
+                    <div class="x_content2">
                         <div class="row" style="width: 100%">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive" style="width:100%">
@@ -26,6 +27,7 @@
                                                 <th>#</th>
                                                 <th>Cod Articulo</th>
                                                 <th>Nombre articulo</th>
+                                                <th>ubicacion</th>
                                                 <th>Cantidad</th>
                                                 <th>fecha</th>
                                             </tr>
@@ -35,7 +37,8 @@
                                                 <tr>
                                                     <td>{{$val['id']}}</td>
                                                     <td>{{$val['ItemCode']}}</td>
-                                                    <td>{{$val['Descirption']}}</td>
+                                                    <td>{{$val['Description']}}</td>
+                                                    <td>{{$val['Location']}}</td>
                                                     <td>{{round($val['Amount'])}}</td>
                                                     <td>{{$val['created_at']}}</td>
                                                 </tr>

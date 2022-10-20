@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Conteos', function (Blueprint $table) {
+        Schema::create('DetalleConteos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Model_id');
-            $table->foreign('Model_id')->references('Id')->on('Modelos_recuento');
-            $table->float('Difference', 10,3)->nullable();
+            $table->unsignedBigInteger('Conteo_id');
+            $table->foreign('Conteo_id')->references('id')->on('Conteos');
+            $table->unsignedBigInteger('Copia_id');
+            $table->foreign('Copia_id')->references('id')->on('CopiaWMS');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Conteos');
+        Schema::dropIfExists('DetalleConteos');
     }
 };

@@ -25,7 +25,7 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                <div class="x_content2">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">

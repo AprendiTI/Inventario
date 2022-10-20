@@ -44,13 +44,14 @@ class CopyController extends Controller
         foreach($tableView as $tabla) {
             DB::table('CopiaWMS')->insert([
                 'ItemCode' => $tabla['Articulo'],
-                'Descirption'=> $tabla['Descripcion'],
+                'Description'=> $tabla['Descripcion'],
                 'BarCode'=> $tabla['CODIGO_BARRAS'],
                 'Amount'=> $tabla['Cantidad'],
                 'Lote'=> $tabla['Lote'],
                 'DateExpiration'=> $tabla['Fecha_Vencimiento'],
                 'Zone'=> $tabla['Almacen'],
                 'Hallway'=> $tabla['Nombre_Pasillo'],
+                'Location'=> $tabla['Ubicación'],
                 'Compartment'=> $tabla['UDC'],
                 'created_at' => $fecha_hora->format('Y-m-d H:i'),
             ]);

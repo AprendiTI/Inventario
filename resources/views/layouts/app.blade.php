@@ -49,6 +49,8 @@
         background-image: url("{{url('/')}}/img/sidebar.png")
       }
     </style>
+    
+    @yield('css')
   </head>
 
   <body class="nav-md footer_fixed">
@@ -163,8 +165,6 @@
     <!-- jQuery custom content scroller -->
     <script src="{{url('/')}}/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script src="{{url('/')}}/js/custom.min.js"></script>
     
     <!-- iCheck -->
     <script src="{{url('/')}}/vendors/iCheck/icheck.min.js"></script>
@@ -214,5 +214,10 @@
         });
       });
     </script>
+
+    @yield('js')
+    <!-- Custom Theme Scripts -->
+    <script src="{{url('/')}}/js/custom.min.js"></script>
+
   </body>
 </html>

@@ -2547,10 +2547,12 @@ function init_DataTables() {
     var $datatable = $('#datatable-checkbox');
 
     $datatable.dataTable({
-        'order': [[1, 'asc']],
+        'order': [[2, 'asc']],
         'columnDefs': [
-            { orderable: false, targets: [0] }
-        ]
+            { orderable: false, targets: [1] }
+        ],
+        
+
     });
     $datatable.on('draw.dt', function () {
         $('checkbox input').iCheck({
