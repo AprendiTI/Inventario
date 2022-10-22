@@ -35,6 +35,7 @@ class CopiaWMS extends Model
         'Amount3',
         'Lote3',
         'DateExpiration3',
+        'DateCopy',
     ];
     
     public $timestamps = true;

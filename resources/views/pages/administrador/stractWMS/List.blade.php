@@ -25,22 +25,40 @@
                                         <thead class="table-dark">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Cod Articulo</th>
-                                                <th>Nombre articulo</th>
-                                                <th>ubicacion</th>
-                                                <th>Cantidad</th>
-                                                <th>fecha</th>
+                                                <th>Tipo conteo</th>
+                                                <th>Usuario Conteo N°1</th>
+                                                <th>Usuario Conteo N°2</th>
+                                                <th>Usuario Conteo N°3</th>
+                                                <th>Estado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($TableCopy as $key => $val)
                                                 <tr>
                                                     <td>{{$val['id']}}</td>
-                                                    <td>{{$val['ItemCode']}}</td>
-                                                    <td>{{$val['Description']}}</td>
-                                                    <td>{{$val['Location']}}</td>
-                                                    <td>{{round($val['Amount'])}}</td>
-                                                    <td>{{$val['created_at']}}</td>
+                                                    @foreach($TipoConteo as $TC)
+                                                        @if($TC['Id'] == $val['Model_id'])
+                                                            <td>{{$TC['Model']}}</td>
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach($usuarios as $us1)
+                                                        @if($us1['id'] == $val['User1'])
+                                                            <td>{{$us1['name']}}</td>
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach($usuarios as $us2)
+                                                        @if($us2['id'] == $val['User2'])
+                                                            <td>{{$us2['name']}}</td>
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach($usuarios as $us3)
+                                                        @if($us3['id'] == $val['User3'])
+                                                            <td>{{$us3['name']}}</td>
+                                                        @endif
+                                                    @endforeach
+                                                    @if($val['State']== 0)
+                                                        <td>Asignado</td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>

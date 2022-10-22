@@ -4,12 +4,28 @@
     
 @section('content')
 <div class="container">
+    <div class="row justify-content-around my-4">
+        <div class="col-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-dark" type="button" onclick="conteo1()">Conteo 1</button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-dark" type="button" onclick="conteo2()">Conteo 2</button>
+              </div>
+        </div>
+        <div class="col-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-dark" type="button" onclick="conteo3()">Conteo 3</button>
+              </div>
+        </div>
+    </div>
     <div class="row justify-content-center">
-        
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Datos WMS<small>General</small></h2>
+                    <h2 id="titulo"></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -33,20 +49,12 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>UDC</th>
-                                            <th>Codigo</th>
-                                            <th>Vencimiento</th>
+                                            <th>Tipo</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($WMS as $key => $val)
-                                            <tr>
-                                                <td>{{$key}}</td>
-                                                <td>{{$val['SCO_UDC']}}</td>
-                                                <td>{{$val['SCO_ARTICOLO']}}</td>
-                                                <td>{{$val['SCO_DVER']}}</td>
-                                            </tr>
-                                        @endforeach
+                                    <tbody id="tabla">
+
                                     </tbody>
                                 </table>
                             </div>
@@ -55,22 +63,88 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-md-10">
-            <div class="card">
-                <table class="table table-hover table-striped table-light">
-                    <thead class="table-dark">
-                        <tr>
-                            <td>UDC</td>
-                            <td>Codigo</td>
-                            <td>Vencimiento</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-
-            </div>
-        </div> --}}
     </div>
 </div>
+@endsection
+
+@section('js')
+
+    <script>
+        
+        let con1 = <?php echo json_encode($WMS1)?>;
+        let con2 = <?php echo json_encode($WMS2)?>;
+        let con3 = <?php echo json_encode($WMS3)?>;
+
+        
+
+        function conteo1() {
+            console.log(con1);
+            
+            if (con1 == '') {
+                alert('No Tienes asignados para primer conteo');
+            }else{
+                $('#titulo').html(`Asignados<small>Conteo 1</small>`);
+                $('#tabla').html('');
+                for (let cont1 of con1) {
+                    $('#tabla').append(`
+                        <tr>
+                            <td>${cont1['id']}</td>
+                            <td>${cont1['Model_id']}</td>
+                            <td>${cont1['State']}</td>
+                        </tr>
+                    `);
+                }
+            }
+
+        }
+
+        function conteo2() {
+            console.log(con2);
+            if (con2 == '') {
+                alert('No Tienes asignados para segundo conteo');
+            }else{
+                $('#titulo').html(`Asignados<small>Conteo 2</small>`);
+                $('#tabla').html('');
+                for (let cont2 of con2) {
+                    $('#tabla').append(`
+                        <tr>
+                            <td>${cont2['id']}</td>
+                            <td>${cont2['Model_id']}</td>
+                            <td>${cont2['State']}</td>
+                        </tr>
+                    `);
+                }
+            }
+        }
+
+        function conteo3() {
+            console.log(con3);
+            if (con3 == '') {
+                alert('No Tienes asignados para tercer conteo');
+            }else{
+                $('#titulo').html(`Asignados<small>Conteo 3</small>`);
+                $('#tabla').html('');
+                for (let cont3 of con3) {
+                    $('#tabla').append(`
+                        <tr>
+                            <td>${cont3['id']}</td>
+                            <td>${cont3['Model_id']}</td>
+                            <td>${cont3['State']}</td>
+                        </tr>
+                    `);
+                }
+            }
+
+        }
+
+        
+        if (con1 !== '') {
+            conteo1();
+        }else if (con2 == '') {
+            conteo2();
+        }else if (con3 !== '') {
+            conteo3();
+        }
+    </script>
+
 @endsection

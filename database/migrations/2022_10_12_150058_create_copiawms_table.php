@@ -25,18 +25,7 @@ return new class extends Migration
             $table->String('Hallway', 50);
             $table->String('Location', 50);
             $table->double('Compartment', 15,0);
-            $table->string('User1', 50)->nullable();
-            $table->double('Amount1', 11,3)->nullable();
-            $table->String('Lote1', 50)->nullable();
-            $table->Date('DateExpiration1')->nullable();
-            $table->string('User2', 50)->nullable();
-            $table->double('Amount2', 11,3)->nullable();
-            $table->String('Lote2', 50)->nullable();
-            $table->Date('DateExpiration2')->nullable();
-            $table->string('User3', 50)->nullable();
-            $table->double('Amount3', 11,3)->nullable();
-            $table->String('Lote3', 50)->nullable();
-            $table->Date('DateExpiration3')->nullable();
+            $table->Date('DateCopy')->nullable();
             $table->timestamps();
         });
     }

@@ -87,17 +87,20 @@
                                 <div class="col-sm-12 scroll">
                                     <ul class="nav nav-pills nav-fill flex-column float-md-left pr-3" id="myTab" role="tablist">
                                         <li class="nav-item">
-                                        <a class="nav-link active py-2" id="home-tab" data-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-selected="true">Zona</a>
+                                        <a class="nav-link active py-2" id="home-tab" data-toggle="tab" href="#panelZonas" role="tab" aria-controls="home" aria-selected="true">Zona</a>
                                         </li>
                                         <li class="nav-item py-2">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="false">Zona y pasillo</a>
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#panelZonas_pasillos" role="tab" aria-controls="profile" aria-selected="false">Zona y pasillo</a>
                                         </li>
                                         <li class="nav-item py-2">
-                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact1" role="tab" aria-controls="contact" aria-selected="false">Producto</a>
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#panelProductos" role="tab" aria-controls="contact" aria-selected="false">Producto</a>
+                                        </li>
+                                        <li class="nav-item py-2">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#panelUbicaciones" role="tab" aria-controls="contact" aria-selected="false">Ubicación</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home1" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-pane fade show active" id="panelZonas" role="tabpanel" aria-labelledby="zonas-tab">
                                             <div class="row justify-content-center">
                                                 <div class="col-10 py-3">
                                                     <label for="por_zona" class="form-label">Zonas.</label>
@@ -107,7 +110,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="tab-pane fade" id="panelZonas_pasillos" role="tabpanel" aria-labelledby="zonas-pasillos-tab">
                                             <div class="row justify-content-center">
                                                 <div class="col-10 py-3">
                                                     <label for="zona_pasillo" class="form-label">Zonas.</label>
@@ -117,11 +120,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">
+                                        <div class="tab-pane fade" id="panelProductos" role="tabpanel" aria-labelledby="productos-tab">
                                             <div class="row justify-content-center">
                                                 <div class="col-10 py-3">
                                                     <label for="productos" class="form-label">Productos.</label>
                                                     <select class="form-select multiple-select-field" id="productos" name="productos[]" data-placeholder="Seleccionar Producto" style="width: 100%" multiple>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="panelUbicaciones" role="tabpanel" aria-labelledby="ubicaciones-tab">
+                                            <div class="row justify-content-center">
+                                                <div class="col-10 py-3">
+                                                    <label for="por_zona" class="form-label">Ubicaciones.</label>
+                                                    <select class="form-select multiple-select-field" id="por_ubicacion" name="ubicacion[]" data-placeholder="Seleccionar Zona" style="width: 100%" multiple>
                                                         
                                                     </select>
                                                 </div>
@@ -224,9 +237,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="submit">Finalizar</button>
+                <div class="row justify-content-end">
+                    <div class="col-4">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-dark" type="submit">Finalizar</button>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="d-grid gap-2">
+                            <a href="{{route('copia.index')}}" class="btn btn-outline-dark">Volver</a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -265,6 +285,7 @@
         } );
         $(document).ready(function() {
             let datos = <?php echo json_encode($data)?>;
+            
             function zone() {
                 let arregloZone = [];
                 let cont = 0;
@@ -332,7 +353,27 @@
                 }
             }
             productos();
+            
+            function ubicacionesf() {
+                let arregloUbi = [];
+                let cont4 = 0;
+                for(let ubi of datos) {
+                    let ubicacion = ubi['Location']
+                    // let zonaP = ubi['Zone'];
+                    let incluye = arregloUbi.includes(ubicacion);
+                        if (!incluye) {
+                            arregloUbi[cont4] = ubicacion;
+                            cont4+=1;
+                        }
+                }
 
+                for(let ubicaciones of arregloUbi) {
+                    $("#por_ubicacion").append(`
+                        <option value="${ubicaciones}">${ubicaciones}</option>
+                    `);
+                }
+            }
+            ubicacionesf();
             
         });
 

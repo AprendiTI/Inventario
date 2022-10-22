@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conteos;
+use App\Models\CopiaWMS;
+use App\Models\ModelosRecuento;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -20,10 +24,19 @@ class CopyController extends Controller
      */
     public function index()
     {
-        $mytable = DB::table('CopiaWMS')->select('*')->get();
+        
+        $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
+        
+        $mytable = Conteos::all();
         $TableCopy = json_decode( json_encode($mytable),true);
-        // dd($TableCopy);
-        return view('pages.administrador.stractWMS.List', compact('TableCopy'));
+        
+        $usuarios = User::all();
+        $usuarios = json_decode( json_encode( $usuarios),true);
+
+        $TipoConteo = ModelosRecuento::all();
+        $TipoConteo = json_decode( json_encode( $TipoConteo),true);
+        
+        return view('pages.administrador.stractWMS.List', compact('TableCopy', 'usuarios', 'TipoConteo'));
     }
 
     /**
@@ -35,13 +48,23 @@ class CopyController extends Controller
     {
         $viewCons = DB::table('INVENTARIO')->select('*')->get();
         $tableView = json_decode( json_encode($viewCons),true);
-        // dd($tableView);
-        // $cop = DB::select('INSERT  INTO CopiaWMS (ItemCode) SELECT Articulo.*, Description.*, CODIGO_BARRAS.*, Cantidad.*, Lote.*, Fecha_Vencimiento.*, Almacen.*, Nombre_Pasillo.*, UDC.* FROM INVENTARIO');
-        // dd($cop);
         
         $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
         // dd($fecha_hora->format('Y-m-d H:i:s'));
         foreach($tableView as $tabla) {
+            // $insert = CopiaWMS::create([
+            //     'ItemCode' => $tabla['Articulo'],
+            //     'Description'=> $tabla['Descripcion'],
+            //     'BarCode'=> $tabla['CODIGO_BARRAS'],
+            //     'Amount'=> $tabla['Cantidad'],
+            //     'Lote'=> $tabla['Lote'],
+            //     'DateExpiration'=> $tabla['Fecha_Vencimiento'],
+            //     'Zone'=> $tabla['Almacen'],
+            //     'Hallway'=> $tabla['Nombre_Pasillo'],
+            //     'Location'=> $tabla['Ubicación'],
+            //     'Compartment'=> $tabla['UDC'],
+            //     'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
+            // ]);
             DB::table('CopiaWMS')->insert([
                 'ItemCode' => $tabla['Articulo'],
                 'Description'=> $tabla['Descripcion'],
@@ -53,7 +76,7 @@ class CopyController extends Controller
                 'Hallway'=> $tabla['Nombre_Pasillo'],
                 'Location'=> $tabla['Ubicación'],
                 'Compartment'=> $tabla['UDC'],
-                'created_at' => $fecha_hora->format('Y-m-d H:i'),
+                'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
             ]);
         }
         return redirect()->route('copia.index');        

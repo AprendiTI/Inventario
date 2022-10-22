@@ -71,25 +71,21 @@ class AsignController extends Controller
         DB::beginTransaction();
         $conteo = Conteos::create([
             'Model_id' => $input["modelo_conteo"],
-            // 'created_at'=>  $fecha_hora->format('Y-m-d H:i'),
+            "User1" => $input['user1'],
+            "User2" => $input['user2'],
+            "User3" => $input['user3'],
+            'State'=>  0,
         ]);
         $conteo = json_decode( json_encode($conteo),true);
 
         if (!isset($input["productos"]) && !isset($input["zona_pasillo"])) {
             foreach($input["Zona"] as $key => $value){
-                $copi = CopiaWMS::all()->where('Zone', $value)->where('Date(Zone)', $fecha_hora->format("Y-m-d"));
+                $copi = CopiaWMS::all()->where('Zone', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"));
                 $copi = json_decode( json_encode($copi),true);
                 foreach ($copi as $key => $val) {
                     DetalleConteos::create([
                         "Conteo_id" => $conteo['id'],
                         "Copia_id" => $val['id'],
-                    ]);
-                    $prod = CopiaWMS::find( $val['id']);
-    
-                    $prod->update([
-                        "User1" => $input['user1'],
-                        "User2" => $input['user2'],
-                        "User3" => $input['user3'],
                     ]);
                 }
             }
@@ -100,7 +96,7 @@ class AsignController extends Controller
                 
                 $param = explode("-", $value);
 
-                $result = CopiaWMS::all()->where('Zone', $param[0])->where('Hallway', $param[1]);
+                $result = CopiaWMS::all()->where('Zone', $param[0])->where('Hallway', $param[1])->where('DateCopy', $fecha_hora->format("Y-m-d"));
                 $result = json_decode( json_encode($result),true);
               
                 foreach ($result as $key => $values) {
@@ -108,51 +104,32 @@ class AsignController extends Controller
                         "Conteo_id" => $conteo['id'],
                         "Copia_id" => $values['id'],
                     ]);
-                    $prod = CopiaWMS::find( $values['id']);
-    
-                    $prod->update([
-                        "User1" => $input['user1'],
-                        "User2" => $input['user2'],
-                        "User3" => $input['user3'],
+                }
+            }
+        }
+        elseif (!isset($input["Zona"]) && !isset($input["zona_pasillo"])) {
+            
+            foreach($input['productos'] as $key => $value){
+                
+                // $param = explode("-", $value);
+
+                $result = CopiaWMS::all()->where('Description', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"));
+                $result = json_decode( json_encode($result),true);
+              
+                foreach ($result as $key => $values) {
+                    DetalleConteos::create([
+                        "Conteo_id" => $conteo['id'],
+                        "Copia_id" => $values['id'],
                     ]);
                 }
             }
         }
-        //elseif (!isset($input["Zona"]) && !isset($input["zona_pasillo"])) {
-        //     foreach($input["producto_id"] as $key => $value){
-        //         Detalle_ventas_productos::create([
-        //             "sale_id" => $venta->id,
-        //             "product_id" => $value,
-        //             "amount"=>$input["cantidades"][$key]
-        //         ]);
-
-        //         $prod = Productos::find($value);
-        //         $prod ->update([
-        //             "amount" => $prod ->amount - $input["cantidades"][$key],
-        //         ]);
-        //     }
-            
-        //     foreach($input['servicio_id'] as $value){
-        //         Detalle_ventas_servicios::create([
-        //             "sale_id" =>  $venta->id,
-        //             "servis_id" => $value,
-        //         ]);
-        //         $products = detalle_productos_servicios::where("servis_id", $value)->get();
-                
-        //         foreach ($products as $produc) {
-        //             $produ = Productos::find($produc->product_id);
-        //             $produ ->update([
-        //                 "amount" => $produ ->amount - $produc->amount,
-        //             ]);
-        //         }
-
-        //     }
-        // }else{
+        // else{
 
         // }
         
         DB::commit();
-        return redirect()->route('asignar.create');
+        return redirect()->route('copia.index');
     }
 
     /**
