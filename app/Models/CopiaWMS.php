@@ -23,18 +23,6 @@ class CopiaWMS extends Model
         'Hallway',
         'Location',
         'Compartment',
-        'User1',
-        'Amount1',
-        'Lote1',
-        'DateExpiration1',
-        'User2',
-        'Amount2',
-        'Lote2',
-        'DateExpiration2',
-        'User3',
-        'Amount3',
-        'Lote3',
-        'DateExpiration3',
         'DateCopy',
     ];
     
