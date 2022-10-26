@@ -38,7 +38,7 @@
                                             <div class="list-group">
                                                 @if($WMS1 !== [])
                                                     @foreach($WMS1 as $key => $cont1)
-                                                        <a href="{{route('contar',  $cont1['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
+                                                        <a href="{{route('lista', ['id'=>$cont1['id'],'ncount'=>"c1"] )}}" class="list-group-item list-group-item-action" aria-current="true">
                                                             @foreach ($TipoConteo as $tc)
                                                                 @if($cont1['Model_id'] == $tc['Id'])
                                                                     {{$tc['Model']}}
@@ -62,7 +62,7 @@
                                             <div class="list-group">
                                                 @if($WMS2 !== [])
                                                     @foreach($WMS2 as $key => $cont2)
-                                                        <a href="{{route('contar',  $cont2['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
+                                                        <a href="{{route('lista',  ['id'=>$cont2['id'],'ncount'=>"c2"])}}" class="list-group-item list-group-item-action" aria-current="true">
                                                             @foreach ($TipoConteo as $tc)
                                                                 @if($cont2['Model_id'] == $tc['Id'])
                                                                     {{$tc['Model']}}
@@ -86,7 +86,7 @@
                                             <div class="list-group">
                                                 @if($WMS3 !== [])
                                                     @foreach($WMS3 as $key => $cont3)
-                                                        <a href="{{route('contar',  $cont3['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
+                                                        <a href="{{route('lista',  ['id'=>$cont3['id'],'ncount'=>"c3"])}}" class="list-group-item list-group-item-action" aria-current="true">
                                                             @foreach ($TipoConteo as $tc)
                                                                 @if($cont3['Model_id'] == $tc['Id'])
                                                                     {{$tc['Model']}}

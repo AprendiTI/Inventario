@@ -80,10 +80,10 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="{{route('home')}}"><i class="fa fa-home"></i>inicio</span></a>
+                  <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</span></a>
                   <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
-                  <li><a href="{{route('copia.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
-                  <li><a href="#"><i class="fa fa-male"></i> conteos</span></a>
+                  <li><a href="{{route('asignar.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
+                    <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> conteos</span></a>
                     {{-- <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
                       <li><a href="index2.html">Dashboard2</a></li>
@@ -165,6 +165,8 @@
     <!-- jQuery custom content scroller -->
     <script src="{{url('/')}}/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
+    {{-- sweetalert --}}
+    @include('sweetalert::alert')
     
     <!-- iCheck -->
     <script src="{{url('/')}}/vendors/iCheck/icheck.min.js"></script>
@@ -189,7 +191,7 @@
     <script>
       
       $(document).ready(function() {
-        var table = $('#tbl').DataTable({
+        var table = $('.tbl').DataTable({
             "responsive": false,
             "language": {
                 "lengthMenu": "Mostrar"+ `

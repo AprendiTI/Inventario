@@ -24,6 +24,7 @@ class CopiaWMS extends Model
         'Location',
         'Compartment',
         'DateCopy',
+        'State',
     ];
     
     public $timestamps = true;

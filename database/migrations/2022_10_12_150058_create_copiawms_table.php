@@ -26,6 +26,7 @@ return new class extends Migration
             $table->String('Location', 50);
             $table->double('Compartment', 15,0);
             $table->Date('DateCopy')->nullable();
+            $table->boolean('State');
             $table->timestamps();
         });
     }

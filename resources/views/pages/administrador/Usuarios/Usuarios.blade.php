@@ -16,11 +16,11 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content2">
+                <div class="x_content">
                     <div class="row" style="width: 100%">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive" style="width:100%">
-                                <table id="tbl" class="table table-striped table-hover table-bordered nowrap" cellspacing="0" width="100%">
+                                <table class="table table-striped table-hover table-bordered nowrap tbl" cellspacing="0" width="100%">
                                     <thead class="table-dark">
                                         <tr>
                                             <th scope="col">#</th>

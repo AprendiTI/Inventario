@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use DateTimeZone;
+use Alert;
 
 class CopyController extends Controller
 {
@@ -27,7 +28,7 @@ class CopyController extends Controller
         
         $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
         
-        $mytable = Conteos::all();
+        $mytable = CopiaWMS::all()->where('DateCopy', $fecha_hora->format('Y-m-d'));
         $TableCopy = json_decode( json_encode($mytable),true);
         
         $usuarios = User::all();
@@ -36,7 +37,7 @@ class CopyController extends Controller
         $TipoConteo = ModelosRecuento::all();
         $TipoConteo = json_decode( json_encode( $TipoConteo),true);
         
-        return view('pages.administrador.stractWMS.List', compact('TableCopy', 'usuarios', 'TipoConteo'));
+        return view('pages.administrador.stractWMS.GenCopy', compact('TableCopy', 'usuarios', 'TipoConteo'));
     }
 
     /**
@@ -50,7 +51,8 @@ class CopyController extends Controller
         $tableView = json_decode( json_encode($viewCons),true);
         
         $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
-        // dd($fecha_hora->format('Y-m-d H:i:s'));
+        
+
         foreach($tableView as $tabla) {
             // $insert = CopiaWMS::create([
             //     'ItemCode' => $tabla['Articulo'],
@@ -76,9 +78,11 @@ class CopyController extends Controller
                 'Hallway'=> $tabla['Nombre_Pasillo'],
                 'Location'=> $tabla['Ubicación'],
                 'Compartment'=> $tabla['UDC'],
-                'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
+                'DateCopy' => $fecha_hora->format('Y-m-d'),
+                'State' => 0,
             ]);
         }
+        Alert::success('Copia', 'Copiado Exitosamente.');
         return redirect()->route('copia.index');        
     }
 

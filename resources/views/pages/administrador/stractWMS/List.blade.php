@@ -9,7 +9,7 @@
             <div class=" col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <a href="{{route('copia.create')}}" class="btn btn-outline-dark">Consultar inventario</a>
+                        <a href="{{route('copia.index')}}" class="btn btn-outline-dark">Consultar inventario</a>
                         <a href="{{route('asignar.create')}}" class="btn btn-outline-dark">Asignar</a>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
@@ -17,11 +17,11 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content2">
+                    <div class="x_content">
                         <div class="row" style="width: 100%">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive" style="width:100%">
-                                    <table id="tbl" class="table table-striped table-hover table-bordered nowrap" cellspacing="0" width="100%">
+                                    <table class="table table-striped table-hover table-bordered nowrap tbl" cellspacing="0" width="100%">
                                         <thead class="table-dark">
                                             <tr>
                                                 <th>#</th>
@@ -56,9 +56,13 @@
                                                             <td>{{$us3['name']}}</td>
                                                         @endif
                                                     @endforeach
-                                                    @if($val['State']== 0)
-                                                        <td>Asignado</td>
-                                                    @endif
+                                                    <td class="text-center">
+                                                        @if($val['State']== 0)
+                                                            <span class="badge rounded-pill text-bg-secondary">Asignado</span>
+                                                        @else 
+                                                            <span class="badge rounded-pill text-bg-secondary">Contado</span>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

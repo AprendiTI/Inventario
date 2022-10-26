@@ -28,6 +28,7 @@ class Conteos extends Model
         'Lote3',
         'DateExpiration3',
         'Difference',
+        'DateAsign',
         'State',
     ];
     

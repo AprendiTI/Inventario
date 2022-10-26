@@ -36,23 +36,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class=" col-sm-12 ">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            {{-- <a href="{{route('copia.create')}}" class="btn btn-outline-dark">Consultar inventario</a> --}}
-                            <h2>Detalle <small>Asignación</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content" style="width: 100%;">
+                            
                             <div class="row">
                                 <div class="col-12 col-md-4 py-4 pl-3">
                                     <label for="user1">Usuario conteo 1 <b style="color: red;"> *</b></label>
@@ -82,7 +66,23 @@
                                     </select>
                                 </div>
                             </div>
-                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class=" col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            {{-- <a href="{{route('copia.create')}}" class="btn btn-outline-dark">Consultar inventario</a> --}}
+                            <h2>Detalle <small>Asignación</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="width: 100%;">
                             <div class="row" style="width: 100%">
                                 <div class="col-sm-12 scroll">
                                     <ul class="nav nav-pills nav-fill flex-column float-md-left pr-3" id="myTab" role="tablist">
@@ -245,7 +245,7 @@
                     </div>
                     <div class="col-2">
                         <div class="d-grid gap-2">
-                            <a href="{{route('copia.index')}}" class="btn btn-outline-dark">Volver</a>
+                            <a href="{{route('asignar.index')}}" class="btn btn-outline-dark">Volver</a>
                         </div>
                     </div>
                 </div>
@@ -283,20 +283,30 @@
             placeholder: $( this ).data( 'placeholder' ),
             closeOnSelect: false,
         } );
-        $(document).ready(function() {
+
+        let date = new Date();
+        let output = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' +  String(date.getDate()).padStart(2, '0');
+        console.log(output);
+
             let datos = <?php echo json_encode($data)?>;
+
             
             function zone() {
                 let arregloZone = [];
                 let cont = 0;
+                
                 for(let dat of datos) {
-                    let id = dat['id']
-                    let zona = dat['Zone'];
-                    let incluye = arregloZone.includes(zona);
-                        if (!incluye) {
-                            arregloZone[cont] = zona, id;
-                            cont+=1;
+                    if (dat['State'] == 0) {
+                        if(dat['DateCopy'] == output){
+                            let id = dat['id']
+                            let zona = dat['Zone'];
+                            let incluye = arregloZone.includes(zona);
+                            if (!incluye) {
+                                arregloZone[cont] = zona, id;
+                                cont+=1;
+                            }
                         }
+                    }
                 }
                     // console.log(arregloZone);
                 for(let zonas of arregloZone) {
@@ -314,13 +324,17 @@
                 let arregloenv = [];
                 let cont2 = 0;
                 for(let pas of datos) {
-                    let pasillo = pas['Hallway']
-                    let zonaP = pas['Zone'];
-                    let incluye = arregloZP.includes(zonaP+"-"+pasillo);
-                        if (!incluye) {
-                            arregloZP[cont2] = zonaP+"-"+pasillo;
-                            cont2+=1;
+                    if (pas['State'] == 0) {
+                        if(pas['DateCopy'] == output){
+                            let pasillo = pas['Hallway']
+                            let zonaP = pas['Zone'];
+                            let incluye = arregloZP.includes(zonaP+"-"+pasillo);
+                            if (!incluye) {
+                                arregloZP[cont2] = zonaP+"-"+pasillo;
+                                cont2+=1;
+                            }
                         }
+                    }
                 }
 
                 for(let zonasPasillos of arregloZP) {
@@ -334,22 +348,29 @@
 
             function productos() {
                 let arregloProd = [];
+                let arregloCodes = [];
                 let cont3 = 0;
                 for(let pas of datos) {
-                    let nombre = pas['Description']
-                    // let zonaP = pas['Zone'];
-                    let incluye = arregloProd.includes(nombre);
-                        if (!incluye) {
-                            arregloProd[cont3] = nombre;
-                            cont3+=1;
+                    if (pas['State'] == 0) {
+                        if(pas['DateCopy'] == output){
+                            let nombre = pas['Description']
+                            let code = pas['ItemCode']
+                            let incluye = arregloCodes.includes(code);
+                            if (!incluye) {
+                                arregloCodes[cont3] = code;
+                                arregloProd[cont3] = nombre;
+                                cont3+=1;
+                            }
                         }
+                    }
                 }
-
+                let key = 0;
                 for(let ProductosL of arregloProd) {
                     $("#productos").append(`
-                        <option value="${ProductosL}">${ProductosL}</option>
+                        <option value="${arregloCodes[key]}">${ProductosL}</option>
                             
                     `);
+                    key+=1;
                 }
             }
             productos();
@@ -358,13 +379,17 @@
                 let arregloUbi = [];
                 let cont4 = 0;
                 for(let ubi of datos) {
-                    let ubicacion = ubi['Location']
-                    // let zonaP = ubi['Zone'];
-                    let incluye = arregloUbi.includes(ubicacion);
-                        if (!incluye) {
-                            arregloUbi[cont4] = ubicacion;
-                            cont4+=1;
+                    
+                    if (ubi['State'] == 0) {
+                        if(ubi['DateCopy'] == output){
+                            let ubicacion = ubi['Location']
+                            let incluye = arregloUbi.includes(ubicacion);
+                            if (!incluye) {
+                                arregloUbi[cont4] = ubicacion;
+                                cont4+=1;
+                            }
                         }
+                    }
                 }
 
                 for(let ubicaciones of arregloUbi) {
@@ -375,8 +400,6 @@
             }
             ubicacionesf();
             
-        });
-
         // function check_all() {
         //     let check = $('#check-all').prop('checked');
         //     console.log(check);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsignController;
+use App\Http\Controllers\ConteosController;
 use App\Http\Controllers\CopyController;
 use Illuminate\Support\Facades\Route;
 use app\Models\Roles;
@@ -20,8 +21,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+    return redirect()->route('home');
+})->middleware('auth');
 
 Auth::routes();
 
@@ -29,6 +30,9 @@ Route::resources([
     'user' => UserController::class,
     'copia' => CopyController::class,
     'asignar' => AsignController::class,
+    'conteos' => ConteosController::class,
 ]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/contar/{id}', [HomeController::class, 'edit'])->name('contar');
+Route::get('/lista/{id}/{ncount}', [ConteosController::class, 'Lista'])->name('lista');

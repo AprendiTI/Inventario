@@ -27,7 +27,7 @@ class UserController extends Controller
         $usuarios = json_decode( json_encode( $usuarios),true);
         $roles = DB::select('select * from Roles');
         $roles = json_decode( json_encode( $roles),true);
-        return view('pages.administrador.Usuarios', compact('usuarios', 'roles'));
+        return view('pages.administrador.Usuarios.Usuarios', compact('usuarios', 'roles'));
     }
 
     /**
@@ -41,7 +41,7 @@ class UserController extends Controller
         $roles = DB::select('select * from Roles');
         $roles = json_decode( json_encode( $roles),true);
 
-        return view('pages.administrador.Crearusuario', compact('roles'));
+        return view('pages.administrador.Usuarios.Crearusuario', compact('roles'));
     }
 
     /**
