@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('tittle', 'Inicio')
+@section('tittle', 'Copia Diaria')
     
 @section('content')
     <div class="container">
@@ -17,7 +17,7 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content2">
+                    <div class="x_content">
                         <div class="row" style="width: 100%">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive" style="width:100%">
@@ -45,7 +45,7 @@
                                                     <td>
                                                         @if($val['State']== 0)
                                                             <span class="badge rounded-pill text-bg-secondary">Copiado</span>
-                                                        @else 
+                                                        @else
                                                             <span class="badge rounded-pill text-bg-dark">Asignado</span>
                                                         @endif
                                                     </td>

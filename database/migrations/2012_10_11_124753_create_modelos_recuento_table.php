@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('Modelos_recuento', function (Blueprint $table) {
             $table->BigIncrements('Id');            
             $table->string('Model',50);
+            $table->timestamps();
         });
     }
 

@@ -13,21 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('DetalleConteos', function (Blueprint $table) {
+        Schema::create('DetalleConteos2', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('Conteo_id');
             $table->foreign('Conteo_id')->references('id')->on('Conteos');
             $table->unsignedBigInteger('Copia_id');
             $table->foreign('Copia_id')->references('id')->on('CopiaWMS');
-            $table->double('Amount1', 11,3)->nullable();
-            $table->String('Lote1', 50)->nullable();
-            $table->Date('DateExpiration1')->nullable();
-            $table->double('Amount2', 11,3)->nullable();
-            $table->String('Lote2', 50)->nullable();
-            $table->Date('DateExpiration2')->nullable();
-            $table->double('Amount3', 11,3)->nullable();
-            $table->String('Lote3', 50)->nullable();
-            $table->Date('DateExpiration3')->nullable();
+            $table->double('Amount', 11,3)->nullable();
+            $table->String('Lote', 50)->nullable();
+            $table->Date('DateExpiration')->nullable();
+            $table->boolean('State');
             $table->timestamps();
         });
     }
@@ -39,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('DetalleConteos');
+        Schema::dropIfExists('DetalleConteos2');
     }
 };

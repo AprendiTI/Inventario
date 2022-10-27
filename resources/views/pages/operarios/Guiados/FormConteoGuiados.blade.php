@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('tittle', 'Inicio')
+@section('tittle', 'Formulario guiados')
     
 @section('content')
 <div class="container">
@@ -97,14 +97,12 @@
                                 <input type="text" id="first-name" required="required" class="form-control " value="{{round($artc['Amount'])}}" name="Amount">
                             </div>
                         </div>
-                        
-
 
                         <div class="ln_solid"></div>
                         <div class=" row">
                             <div class="col-md-6 col-sm-6 offset-md-3">
                                 <a href="{{route('conteos.show',  $artc['id'])}}" class="btn btn-primary" type="button">Volver</a>
-                                <button type="submit" class="btn btn-success">Finaluzar</button>
+                                <button type="submit" class="btn btn-success">Finalizar</button>
                             </div>
                         </div>
 

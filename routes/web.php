@@ -36,3 +36,4 @@ Route::resources([
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/contar/{id}', [HomeController::class, 'edit'])->name('contar');
 Route::get('/lista/{id}/{ncount}', [ConteosController::class, 'Lista'])->name('lista');
+Route::get('/change/{id}', [ConteosController::class, 'ChangeState'])->name('changestate');

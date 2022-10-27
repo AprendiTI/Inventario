@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('User3', 50)->nullable();
             $table->float('Difference', 10,3)->nullable();
             $table->Date('DateAsign')->nullable();
-            $table->boolean('State');
+            $table->boolean('State1');
+            $table->boolean('State2');
+            $table->boolean('State3');
             $table->timestamps();
         });
     }

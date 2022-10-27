@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'pruebas',
+            'name' => 'Ivanagro',
             'email' => 'registro@ivanagro.com',
             'state' => '1',
             'rol_id' => '1',
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         ]);
         
         User::create([
-            'name' => 'camilo',
+            'name' => 'Camilo',
             'email' => 'aprendiz.ti@ivanagro.com',
             'state' => '1',
             'rol_id' => '2',

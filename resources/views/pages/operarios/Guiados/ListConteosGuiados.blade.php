@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('tittle', 'Inicio')
+@section('tittle', 'Lista Guiados')
     
 @section('content')
 <div class="container">
@@ -9,7 +9,9 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Form Design <small>different form elements</small></h2>
+                    <h2>Lista Conteos <small>
+                        <a class="btn btn-sm btn-outline-dark" href="{{route('conteos.index')}}">Volver</a>    
+                    </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                         </li>
@@ -39,6 +41,7 @@
                                 <th>Nombre</th>
                                 <th>Ubicacion</th>
                                 <th>Cantidad</th>
+                                <th>Estado Linea</th>
                                 <th>Acciones</th>
                               </tr>
                             </thead>
@@ -49,20 +52,21 @@
                                         <td>{{$prod['ItemCode']}}</td>
                                         <td>{{$prod['Description']}}</td>
                                         <td>{{$prod['Location']}}</td>
-                                        <td>{{$prod['Amount']}}</td>
+                                        <td>{{round($prod['Amount'])}}</td>
+                                        <td>{{$prod['State_line']}}</td>
                                         <td><a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                          </table>
-                        {{-- <div class="ln_solid"></div>
-                        <div class=" row">
-                            <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-primary" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                        </table>
+                        @if($NR == 0)
+                            <div class="ln_solid"></div>
+                            <div class=" row">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <a href="{{route('changestate', $prod['id'])}}" class="btn btn-success">Finalizar</a>
+                                </div>
                             </div>
-                        </div> --}}
+                        @endif
 
                     </form>
                 </div>

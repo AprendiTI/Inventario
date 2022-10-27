@@ -9,7 +9,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Listas de conteos</h2>
+                    <h2>Bienvenida</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                         </li>
@@ -18,93 +18,8 @@
                 </div>
                 <div class="x_content">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <ul class="nav nav-pills nav-fill flex-column float-md-left pr-3" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active py-2" id="home-tab" data-toggle="tab" href="#cont1" role="tab" aria-controls="home" aria-selected="true">Conteo 1</a>
-                                </li>
-                                <li class="nav-item py-2">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#cont2" role="tab" aria-controls="profile" aria-selected="false">Conteo 2</a>
-                                </li>
-                                <li class="nav-item py-2">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cont3" role="tab" aria-controls="contact" aria-selected="false">Conteo 3</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-
-                                <div class="tab-pane fade show active" id="cont1" role="tabpanel" aria-labelledby="zonas-tab">
-                                    <div class="row justify-content-center">
-                                        <div class="col-10 py-3">
-                                            <div class="list-group">
-                                                @if($WMS1 !== [])
-                                                    @foreach($WMS1 as $key => $cont1)
-                                                        <a href="{{route('contar',  $cont1['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
-                                                            @foreach ($TipoConteo as $tc)
-                                                                @if($cont1['Model_id'] == $tc['Id'])
-                                                                    {{$tc['Model']}}
-                                                                @endif
-                                                            @endforeach
-                                                        </a>
-                                                    @endforeach
-                                                @else
-                                                    <div class="alert alert-secondary" role="alert">
-                                                        Sin primeros conteos por realizar.
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="cont2" role="tabpanel" aria-labelledby="zonas-pasillos-tab">
-                                    <div class="row justify-content-center">
-                                        <div class="col-10 py-3">
-                                            <div class="list-group">
-                                                @if($WMS2 !== [])
-                                                    @foreach($WMS2 as $key => $cont2)
-                                                        <a href="{{route('contar',  $cont2['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
-                                                            @foreach ($TipoConteo as $tc)
-                                                                @if($cont2['Model_id'] == $tc['Id'])
-                                                                    {{$tc['Model']}}
-                                                                @endif
-                                                            @endforeach
-                                                        </a>
-                                                    @endforeach
-                                                @else
-                                                    <div class="alert alert-secondary" role="alert">
-                                                        Sin segundos conteos por realizar.
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="cont3" role="tabpanel" aria-labelledby="productos-tab">
-                                    <div class="row justify-content-center">
-                                        <div class="col-10 py-3">
-                                            <div class="list-group">
-                                                @if($WMS3 !== [])
-                                                    @foreach($WMS3 as $key => $cont3)
-                                                        <a href="{{route('contar',  $cont3['id'])}}" class="list-group-item list-group-item-action" aria-current="true">
-                                                            @foreach ($TipoConteo as $tc)
-                                                                @if($cont3['Model_id'] == $tc['Id'])
-                                                                    {{$tc['Model']}}
-                                                                @endif
-                                                            @endforeach
-                                                        </a>
-                                                    @endforeach
-                                                @else
-                                                    <div class="alert alert-secondary" role="alert">
-                                                        Sin terceros conteos por realizar.
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <div class="col">
+                            Bienvenid@
                         </div>
                     </div>
                 </div>

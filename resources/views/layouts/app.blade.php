@@ -78,19 +78,23 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                  <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</span></a>
-                  <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
-                  <li><a href="{{route('asignar.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
+                @if(auth()->user()->Rol_id == 1)
+                  <h3>Administrador</h3>
+                  <ul class="nav side-menu">
+                    <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</span></a>
+                    <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
+                    <li><a href="{{route('asignar.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
                     <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> conteos</span></a>
-                    {{-- <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
-                    </ul> --}}
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                @else
+                  <h3>General</h3>
+                  <ul class="nav side-menu">
+                    <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</span></a>
+                    <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> conteos</span></a>
+                    </li>
+                  </ul>
+                @endif
               </div>
             </div>
             <div class="sidebar-footer hidden-small">

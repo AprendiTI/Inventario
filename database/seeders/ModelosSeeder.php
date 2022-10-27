@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ModelosRecuento;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,13 @@ class ModelosSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('Modelos_recuento')->insert([
+        ModelosRecuento::create([
             'Model' => 'Ciego',
         ]);
-        DB::table('Modelos_recuento')->insert([
+        ModelosRecuento::create([
             'Model' => 'Giuiado',
         ]);
-        DB::table('Modelos_recuento')->insert([
+        ModelosRecuento::create([
             'Model' => 'Semiguiado',
         ]);
     }

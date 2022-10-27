@@ -16,7 +16,7 @@ class CopyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'ValidarRol']);
     }
     /**
      * Display a listing of the resource.
@@ -52,38 +52,46 @@ class CopyController extends Controller
         
         $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
         
+        $exist = CopiaWMS::all()->where('DateCopy', $fecha_hora->format('Y-m-d'));
+        $exist = json_decode( json_encode($exist),true);
 
-        foreach($tableView as $tabla) {
-            // $insert = CopiaWMS::create([
-            //     'ItemCode' => $tabla['Articulo'],
-            //     'Description'=> $tabla['Descripcion'],
-            //     'BarCode'=> $tabla['CODIGO_BARRAS'],
-            //     'Amount'=> $tabla['Cantidad'],
-            //     'Lote'=> $tabla['Lote'],
-            //     'DateExpiration'=> $tabla['Fecha_Vencimiento'],
-            //     'Zone'=> $tabla['Almacen'],
-            //     'Hallway'=> $tabla['Nombre_Pasillo'],
-            //     'Location'=> $tabla['Ubicación'],
-            //     'Compartment'=> $tabla['UDC'],
-            //     'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
-            // ]);
-            DB::table('CopiaWMS')->insert([
-                'ItemCode' => $tabla['Articulo'],
-                'Description'=> $tabla['Descripcion'],
-                'BarCode'=> $tabla['CODIGO_BARRAS'],
-                'Amount'=> $tabla['Cantidad'],
-                'Lote'=> $tabla['Lote'],
-                'DateExpiration'=> $tabla['Fecha_Vencimiento'],
-                'Zone'=> $tabla['Almacen'],
-                'Hallway'=> $tabla['Nombre_Pasillo'],
-                'Location'=> $tabla['Ubicación'],
-                'Compartment'=> $tabla['UDC'],
-                'DateCopy' => $fecha_hora->format('Y-m-d'),
-                'State' => 0,
-            ]);
+        if($exist == []) {
+            foreach($tableView as $tabla) {
+                // $insert = CopiaWMS::create([
+                //     'ItemCode' => $tabla['Articulo'],
+                //     'Description'=> $tabla['Descripcion'],
+                //     'BarCode'=> $tabla['CODIGO_BARRAS'],
+                //     'Amount'=> $tabla['Cantidad'],
+                //     'Lote'=> $tabla['Lote'],
+                //     'DateExpiration'=> $tabla['Fecha_Vencimiento'],
+                //     'Zone'=> $tabla['Almacen'],
+                //     'Hallway'=> $tabla['Nombre_Pasillo'],
+                //     'Location'=> $tabla['Ubicación'],
+                //     'Compartment'=> $tabla['UDC'],
+                //     'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
+                // ]);
+                DB::table('CopiaWMS')->insert([
+                    'ItemCode' => $tabla['Articulo'],
+                    'Description'=> $tabla['Descripcion'],
+                    'BarCode'=> $tabla['CODIGO_BARRAS'],
+                    'Amount'=> $tabla['Cantidad'],
+                    'Lote'=> $tabla['Lote'],
+                    'DateExpiration'=> $tabla['Fecha_Vencimiento'],
+                    'Zone'=> $tabla['Almacen'],
+                    'Hallway'=> $tabla['Nombre_Pasillo'],
+                    'Location'=> $tabla['Ubicación'],
+                    'Compartment'=> $tabla['UDC'],
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'State' => 0,
+                ]);
+            }
+            Alert::success('Copia', 'Copiado Exitosamente.');
+            return redirect()->route('copia.index');  
+        }else {
+            Alert::warning('Copia', 'Solo es permitido realizar una copia por día');
+            return redirect()->route('copia.index');  
         }
-        Alert::success('Copia', 'Copiado Exitosamente.');
-        return redirect()->route('copia.index');        
+      
     }
 
     /**

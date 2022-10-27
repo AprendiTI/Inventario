@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('tittle', 'Inicio')
+@section('tittle', 'Lista Conteos')
     
 @section('content')
     <div class="container">
@@ -9,7 +9,7 @@
             <div class=" col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <a href="{{route('copia.index')}}" class="btn btn-outline-dark">Consultar inventario</a>
+                        <a href="{{route('copia.index')}}" class="btn btn-outline-dark">Ver inventario</a>
                         <a href="{{route('asignar.create')}}" class="btn btn-outline-dark">Asignar</a>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
@@ -29,11 +29,13 @@
                                                 <th>Usuario Conteo N°1</th>
                                                 <th>Usuario Conteo N°2</th>
                                                 <th>Usuario Conteo N°3</th>
-                                                <th>Estado</th>
+                                                <th>Estado conteo 1</th>
+                                                <th>Estado conteo 2</th>
+                                                <th>Estado conteo 3</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($TableCopy as $key => $val)
+                                            @foreach($mytable as $key => $val)
                                                 <tr>
                                                     <td>{{$val['id']}}</td>
                                                     @foreach($TipoConteo as $TC)
@@ -57,10 +59,24 @@
                                                         @endif
                                                     @endforeach
                                                     <td class="text-center">
-                                                        @if($val['State']== 0)
-                                                            <span class="badge rounded-pill text-bg-secondary">Asignado</span>
+                                                        @if($val['State1']== 0)
+                                                            <span class="badge rounded-pill text-bg-danger">Sin contar</span>
                                                         @else 
-                                                            <span class="badge rounded-pill text-bg-secondary">Contado</span>
+                                                            <span class="badge rounded-pill text-bg-success">Contado</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($val['State2']== 0)
+                                                            <span class="badge rounded-pill text-bg-danger">Sin contar</span>
+                                                        @else 
+                                                            <span class="badge rounded-pill text-bg-success">Contado</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($val['State3']== 0)
+                                                            <span class="badge rounded-pill text-bg-danger">Sin contar</span>
+                                                        @else 
+                                                            <span class="badge rounded-pill text-bg-success">Contado</span>
                                                         @endif
                                                     </td>
                                                 </tr>
