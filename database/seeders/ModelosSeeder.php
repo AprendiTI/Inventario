@@ -20,7 +20,7 @@ class ModelosSeeder extends Seeder
             'Model' => 'Ciego',
         ]);
         ModelosRecuento::create([
-            'Model' => 'Giuiado',
+            'Model' => 'Guiado',
         ]);
         ModelosRecuento::create([
             'Model' => 'Semiguiado',

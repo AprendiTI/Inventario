@@ -2317,6 +2317,7 @@ span.right {
   margin-top: 20px; }
 
 .tile_count .tile_stats_count {
+  align-items: center;
   border-bottom: 1px solid #D9DEE4;
   padding: 0 10px 0 20px;
   text-overflow: ellipsis;

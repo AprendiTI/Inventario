@@ -18,8 +18,32 @@
                 </div>
                 <div class="x_content">
                     <div class="row">
-                        <div class="col">
-                            Bienvenid@
+                        <h3 class="text-center">
+                            Bienvenido {{ Auth::user()->Rol_id == 1 ? "Administrador" : "Operario"}} {{ Auth::user()->name }} tu cuentas con {{$total > 1 ? $total." Conteos" : $total." conteo"}} por realizar.
+                        </h3>
+                        <div class="col-12 text-center">
+                            <div class="row justify-content-center">
+                                <div class="tile_count d-flex justify-content-center">
+                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
+                                        <div class="col-md-2 col-sm-4">
+                                            <span class="count_top"><i class="fa fa-user"></i> Conteo N°1</span>
+                                            <div class="count">{{$WMS1}}</div>
+                                        </div>
+                                    </a>
+                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
+                                        <div class="col-md-2 col-sm-4">
+                                            <span class="count_top"><i class="fa fa-clock-o"></i> Conteo N°2</span>
+                                            <div class="count">{{$WMS2}}</div>
+                                        </div>
+                                    </a>
+                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
+                                        <div class="col-md-2 col-sm-4">
+                                            <span class="count_top"><i class="fa fa-user"></i> Conteo N°3</span>
+                                            <div class="count green">{{$WMS3}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

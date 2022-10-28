@@ -83,7 +83,8 @@
                   <ul class="nav side-menu">
                     <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</span></a>
                     <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
-                    <li><a href="{{route('asignar.index')}}"><i class="fa fa-binoculars"></i> Asignación</span></a>
+                    <li><a href="{{route('asignar.index')}}"><i class="fa fa-pencil"></i> Asignación</span></a>
+                      <li><a href="{{route('informes')}}"><i class="fa fa-line-chart"></i> Informes</span></a>
                     <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> conteos</span></a>
                     </li>
                   </ul>

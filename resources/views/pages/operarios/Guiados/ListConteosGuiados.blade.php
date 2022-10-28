@@ -9,36 +9,27 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Lista Conteos <small>
-                        <a class="btn btn-sm btn-outline-dark" href="{{route('conteos.index')}}">Volver</a>    
-                    </small></h2>
+                    <h2>
+                        <a class="btn btn-sm btn-outline-dark" href="{{url()->previous()}}">Volver</a>
+                        Guiados
+                    </h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                         </li>
-                        {{-- <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a class="dropdown-item" href="#">Settings 1</a>
-                                </li>
-                                <li><a class="dropdown-item" href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li> --}}
                     </ul>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                    <div class="card-box table-responsive" style="width:100%">
                         <table  class="table table-hover tbl">
                             <thead>
                               <tr>
                                 <th>#</th>
                                 <th>Codigo</th>
                                 <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Pasillo</th>
                                 <th>Ubicacion</th>
                                 <th>Cantidad</th>
                                 <th>Estado Linea</th>
@@ -51,9 +42,15 @@
                                         <th scope="row">{{$key}}</th>
                                         <td>{{$prod['ItemCode']}}</td>
                                         <td>{{$prod['Description']}}</td>
+                                        <td>{{$prod['Zone']}}</td>
+                                        <td>{{$prod['Hallway']}}</td>
                                         <td>{{$prod['Location']}}</td>
                                         <td>{{round($prod['Amount'])}}</td>
-                                        <td>{{$prod['State_line']}}</td>
+                                        <td class="text-center">
+                                            @if($prod['State_line'] == 0)
+                                                <span class="badge rounded-pill text-bg-danger">Por contar</span>
+                                            @endif
+                                        </td>
                                         <td><a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a></td>
                                     </tr>
                                 @endforeach
@@ -67,8 +64,7 @@
                                 </div>
                             </div>
                         @endif
-
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

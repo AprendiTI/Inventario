@@ -8,6 +8,8 @@ use app\Models\Roles;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContController;
+use App\Http\Controllers\InformesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +37,11 @@ Route::resources([
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/contar/{id}', [HomeController::class, 'edit'])->name('contar');
-Route::get('/lista/{id}/{ncount}', [ConteosController::class, 'Lista'])->name('lista');
+
+Route::get('/Ubicaciones/{id}/{ncount}', [ContController::class, 'FormUbi'])->name('Ubicaciones');
+Route::post('/searchubi/{id}', [ContController::class, 'ubiSearch'])->name('buscarUbicacion');
+
+Route::get('/lista/{id}', [ContController::class, 'Lista'])->name('lista');
 Route::get('/change/{id}', [ConteosController::class, 'ChangeState'])->name('changestate');
+
+Route::get('/infomes', [InformesController::class, 'index'])->name('informes');

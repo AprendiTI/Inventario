@@ -34,45 +34,19 @@ class HomeController extends Controller
         $TipoConteo = ModelosRecuento::all();
         $TipoConteo = json_decode( json_encode( $TipoConteo),true);
     
+        $WMS1 = Conteos::all()->where('User1',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State1", 0)->count();
+        // $WMS1 = json_decode( json_encode($conteo1),true);
+
+        $WMS2 = Conteos::all()->where('User2',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State2", 0)->where("State1", 1)->count();
+        // $WMS2 = json_decode( json_encode($conteo2),true);
         
-        // $conteo1 = CopiaWMS::select("CopiaWMS.*","DetalleConteos.*","Conteos.*")->join("DetalleConteos", "CopiaWMS.id", "=", "DetalleConteos.Copia_id")
-        // ->join("Conteos","Conteos.id", "=", "DetalleConteos.Conteo_id" )
-        // ->where('CopiaWMS.DateCopy', $fecha_hora->format('Y-m-d'))
-        // ->where('Conteos.User1', Auth::user()->id)
-        // ->get();
-        $conteo1 = Conteos::all()->where('User1',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'));
-        
-        $WMS1 = json_decode( json_encode($conteo1),true);
+        $WMS3 = Conteos::all()->where('User3',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State3", 0)->where("State1", 1)->where("State2", 1)->count();
+        // $WMS3 = json_decode( json_encode($conteo3),true);
 
-        // dd ($WMS1);
+        $total = $WMS1+$WMS2+$WMS3;
+        // dd($total);
 
-        
-        // $conteo2 = CopiaWMS::select("CopiaWMS.*","DetalleConteos.*","Conteos.*")->join("DetalleConteos", "CopiaWMS.id", "=", "DetalleConteos.Copia_id")
-        // ->join("Conteos","Conteos.id", "=", "DetalleConteos.Conteo_id" )
-        // ->where('CopiaWMS.DateCopy', $fecha_hora->format('Y-m-d'))
-        // ->where('Conteos.User2', Auth::user()->id)
-        // ->get();
-
-        $conteo2 = Conteos::all()->where('User2',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'));
-
-        $WMS2 = json_decode( json_encode($conteo2),true);
-
-        // dd ($WMS2);
-        
-        
-        // $conteo3 = CopiaWMS::select("CopiaWMS.*","DetalleConteos.*","Conteos.*")->join("DetalleConteos", "CopiaWMS.id", "=", "DetalleConteos.Copia_id")
-        // ->join("Conteos","Conteos.id", "=", "DetalleConteos.Conteo_id" )
-        // ->where('CopiaWMS.DateCopy', $fecha_hora->format('Y-m-d'))
-        // ->where('Conteos.User3', Auth::user()->id)
-        // ->get();
-
-        $conteo3 = Conteos::all()->where('User3',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'));
-        
-        $WMS3 = json_decode( json_encode($conteo3),true);
-
-        // dd ($WMS3);
-
-        return view('home', compact('TipoConteo','WMS1', 'WMS2', 'WMS3',));
+        return view('home', compact('total','TipoConteo','WMS1', 'WMS2', 'WMS3'));
     }
     
     /**

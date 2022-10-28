@@ -14,6 +14,7 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ConteosController extends Controller
 {
@@ -37,11 +38,12 @@ class ConteosController extends Controller
         $conteo1 = Conteos::all()->where('User1',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State1", 0);
         $WMS1 = json_decode( json_encode($conteo1),true);
 
-        $conteo2 = Conteos::all()->where('User2',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State2", 0);
+        $conteo2 = Conteos::all()->where('User2',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State2", 0)->where("State1", 1);
         $WMS2 = json_decode( json_encode($conteo2),true);
         
-        $conteo3 = Conteos::all()->where('User3',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State3", 0);
+        $conteo3 = Conteos::all()->where('User3',  Auth::user()->id)->where('DateAsign', $fecha_hora->format('Y-m-d'))->where("State3", 0)->where("State1", 1)->where("State2", 1);
         $WMS3 = json_decode( json_encode($conteo3),true);
+
 
         return view('pages.operarios.Conteos.ListConteos', compact('TipoConteo','WMS1', 'WMS2', 'WMS3',));
     }
@@ -73,10 +75,7 @@ class ConteosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -121,9 +120,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','artc'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -151,9 +149,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','artc'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -181,9 +178,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','artc'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c2'){
             $detalleRes = DetalleConteos2::select('Conteo_id')->where('id', $id)->get();
@@ -219,9 +215,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','artc'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -249,9 +244,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','artc'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -279,9 +273,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','artc'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c3') {
             $detalleRes = DetalleConteos3::select('Conteo_id')->where('id', $id)->get();
@@ -317,9 +310,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','artc'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -347,9 +339,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','artc'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -377,9 +368,8 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
-                $artc = $response[0];
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','artc'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
             }
         }
         
@@ -436,7 +426,7 @@ class ConteosController extends Controller
         DB::commit();
         
         Alert::success('Conteo', 'detalle contado exitosamente.');
-        return redirect()->route('lista', ['id'=>$detalle['Conteo_id'],'ncount'=>$_SESSION['NCONTEO']]);
+        return redirect()->route('Ubicaciones', ['id'=>$detalle['Conteo_id'],'ncount'=>$_SESSION['NCONTEO']]);
 
     }
 
@@ -446,10 +436,7 @@ class ConteosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+   
 
     public function ChangeState($id)
     {
@@ -471,299 +458,5 @@ class ConteosController extends Controller
         return redirect()->route('conteos.index');
     }
 
-    public function Lista($id, $ncount)
-    {
-        session_start();
-        
-        $_SESSION['NCONTEO'] = $ncount;
-        $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
-        $tipoc = json_decode( json_encode($tipoc),true);
-        $tipoc = $tipoc[0]['Model_id'];
-        // dd($tipoc);
-        if($ncount == 'c1') {
-            if($tipoc == 1){
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User1 as u1',
-                    'Conteos.Model_id',
-                    'Conteos.State1 as State_cont',
-                    'DetalleConteos1.id as d_id',
-                    'DetalleConteos1.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
 
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                
-                return view('pages.operarios.Ciegos.ListConteosCiegos', compact('NR','response'));
-
-            }elseif ($tipoc == 2) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User1 as u1',
-                    'Conteos.Model_id',
-                    'Conteos.State3 as State_cont',
-                    'DetalleConteos1.id as d_id',
-                    'DetalleConteos1.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                return view('pages.operarios.Guiados.ListConteosGuiados', compact('NR','response'));
-            }elseif ($tipoc == 3) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User1 as u1',
-                    'Conteos.Model_id',
-                    'Conteos.State3 as State_cont',
-                    'DetalleConteos1.id as d_id',
-                    'DetalleConteos1.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-    
-                return view('pages.operarios.Semiguiados.ListConteosSemiG', compact('NR','response'));
-            }
-        }elseif ($ncount == 'c2'){
-            if($tipoc == 1){
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User2 as user',
-                    'Conteos.Model_id',
-                    'Conteos.State2 as State_cont',
-                    'DetalleConteos2.id as d_id',
-                    'DetalleConteos2.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                
-                return view('pages.operarios.Ciegos.ListConteosCiegos', compact('NR','response'));
-            }elseif ($tipoc == 2) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User2 as u2',
-                    'Conteos.Model_id',
-                    'Conteos.State2 as State_cont',
-                    'DetalleConteos2.id as d_id',
-                    'DetalleConteos2.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                return view('pages.operarios.Guiados.ListConteosGuiados', compact('NR','response'));
-            }elseif ($tipoc == 3) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User2 as u2',
-                    'Conteos.Model_id',
-                    'Conteos.State2 as State_cont',
-                    'DetalleConteos2.id as d_id',
-                    'DetalleConteos2.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-    
-                return view('pages.operarios.Semiguiados.ListConteosSemiG', compact('NR','response'));
-            }
-        }elseif ($ncount == 'c3') {
-            if($tipoc == 1){
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User3 as user',
-                    'Conteos.Model_id',
-                    'Conteos.State3 as State_cont',
-                    'DetalleConteos3.id as d_id',
-                    'DetalleConteos3.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                
-                return view('pages.operarios.Ciegos.ListConteosCiegos', compact('NR','response'));
-            }elseif ($tipoc == 2) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User3 as u3',
-                    'Conteos.Model_id',
-                    'Conteos.State3 as State_cont',
-                    'DetalleConteos3.id as d_id',
-                    'DetalleConteos3.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-                return view('pages.operarios.Guiados.ListConteosGuiados', compact('NR','response'));
-            }elseif ($tipoc == 3) {
-                $response = Conteos::select(
-                    'Conteos.id',
-                    'Conteos.User3 as u3',
-                    'Conteos.Model_id',
-                    'Conteos.State3 as State_cont',
-                    'DetalleConteos3.id as d_id',
-                    'DetalleConteos3.State as State_line',
-                    'CopiaWMS.ItemCode',
-                    'CopiaWMS.Description',
-                    'CopiaWMS.BarCode',
-                    'CopiaWMS.Amount',
-                    'CopiaWMS.Lote',
-                    'CopiaWMS.DateExpiration',
-                    'CopiaWMS.Zone',
-                    'CopiaWMS.Hallway',
-                    'CopiaWMS.Location',
-                    'CopiaWMS.Compartment',
-                    'CopiaWMS.DateCopy',
-                    'CopiaWMS.State as State_Copy',
-                )
-                ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
-                ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
-                ->where('Conteos.id', $id)
-                ->get();
-                
-                $NR = $response->where('State_line', 0)->count();
-                
-                $response = json_decode( json_encode($response),true);
-    
-                return view('pages.operarios.Semiguiados.ListConteosSemiG', compact('NR','response'));
-            }
-        }
-
-    }
 }
