@@ -70,6 +70,11 @@ class CopyController extends Controller
                 //     'Compartment'=> $tabla['UDC'],
                 //     'DateCopy' => $fecha_hora->format('Y-m-d H:i'),
                 // ]);
+                if ($tabla['Ubicación'] !== '') {
+                    $ubi = $tabla['Ubicación'];
+                }else {
+                    $ubi = $tabla['Nombre_Pasillo']."-".$tabla['UDC'];
+                }
                 DB::table('CopiaWMS')->insert([
                     'ItemCode' => $tabla['Articulo'],
                     'Description'=> $tabla['Descripcion'],
@@ -79,7 +84,7 @@ class CopyController extends Controller
                     'DateExpiration'=> $tabla['Fecha_Vencimiento'],
                     'Zone'=> $tabla['Almacen'],
                     'Hallway'=> $tabla['Nombre_Pasillo'],
-                    'Location'=> $tabla['Ubicación'],
+                    'Location'=> $ubi,
                     'Compartment'=> $tabla['UDC'],
                     'DateCopy' => $fecha_hora->format('Y-m-d'),
                     'State' => 0,
