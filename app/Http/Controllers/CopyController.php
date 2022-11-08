@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use DateTimeZone;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CopyController extends Controller
 {
