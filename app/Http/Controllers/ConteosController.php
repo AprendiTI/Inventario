@@ -120,8 +120,14 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+                
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -149,8 +155,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -178,8 +189,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c2'){
             $detalleRes = DetalleConteos2::select('Conteo_id')->where('id', $id)->get();
@@ -216,7 +232,12 @@ class ConteosController extends Controller
                 
                 $response = json_decode( json_encode($response),true);
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+                
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -244,8 +265,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -273,8 +299,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c3') {
             $detalleRes = DetalleConteos3::select('Conteo_id')->where('id', $id)->get();
@@ -311,7 +342,12 @@ class ConteosController extends Controller
                 
                 $response = json_decode( json_encode($response),true);
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+                
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -339,8 +375,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -368,8 +409,13 @@ class ConteosController extends Controller
                 ->get();
                 
                 $response = json_decode( json_encode($response),true);
+                
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
     
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }
         
@@ -392,6 +438,7 @@ class ConteosController extends Controller
 
             if ($_SESSION['NCONTEO'] == "c1") {
                 DetalleConteos1::where('id', $id)->update([
+                    'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
                     'DateExpiration' => $input['fecha'],
@@ -403,16 +450,21 @@ class ConteosController extends Controller
 
             }elseif ($_SESSION['NCONTEO'] == "c2") {
                 DetalleConteos2::where('id', $id)->update([
+                    'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
                     'DateExpiration' => $input['fecha'],
                     'State' => 1,
                 ]);
 
+                
+
                 $detalle = DetalleConteos2::find($id);
                 $detalle = json_decode( json_encode($detalle),true);
+
             }else if ($_SESSION['NCONTEO'] == "c3") {
                 DetalleConteos3::where('id', $id)->update([
+                    'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
                     'DateExpiration' => $input['fecha'],

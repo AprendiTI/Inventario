@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class UserRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,25 +26,14 @@ class UserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 
-                Password::min(2)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()        
-            ],
-            'Rol_id' => ['required'],
         ];
     }
-    
+
     public function attributes()
     {
         return [
             'name'=> ' Nombre ',
             'email'=> ' Correo ',
-            'password'=> ' Contraseña ',
-            'Rol_id'=> ' Rol ',
         ];
     }
 }

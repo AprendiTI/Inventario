@@ -13,6 +13,12 @@
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased; }
+
+.required {
+  color: red;
+  font-weight:900;
+  font-size: 17px;
+}
 .bg-col{
   background-color: rgba(45, 45, 45, 0.386);
   color:#000;
@@ -2317,7 +2323,6 @@ span.right {
   margin-top: 20px; }
 
 .tile_count .tile_stats_count {
-  align-items: center;
   border-bottom: 1px solid #D9DEE4;
   padding: 0 10px 0 20px;
   text-overflow: ellipsis;

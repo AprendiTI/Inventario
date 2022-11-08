@@ -33,6 +33,7 @@
                                 <th>Ubicacion</th>
                                 <th>Cantidad</th>
                                 <th>Estado Linea</th>
+                                <th>Barras</th>
                                 <th>Acciones</th>
                               </tr>
                             </thead>
@@ -51,6 +52,7 @@
                                                 <span class="badge rounded-pill text-bg-danger">Por contar</span>
                                             @endif
                                         </td>
+                                        <td>{{$prod['BarCode']}}</td>
                                         <td><a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a></td>
                                     </tr>
                                 @endforeach

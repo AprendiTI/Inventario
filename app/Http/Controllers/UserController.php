@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -85,7 +88,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::find($id);
+        // dd($usuario);
+
+        return view('pages.perfil.Perfil', compact('usuario'));
     }
 
     /**
@@ -95,9 +101,38 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProfileRequest $request, $id)
     {
-        //
+        $inputs = $request->all();
+        // dd($inputs);
+        $usuario = User::find($id);
+
+        $usuario->update([
+            'name' => $inputs['name'],
+            'email' => $inputs['email'],
+        ]);
+        Alert::success('Perfil', 'Perfil personal actualizado exitosamente.');
+        return redirect()->route('user.edit', $id);
+
+    }
+
+    public function updatePass(ChangePasswordRequest $request, $id)
+    {
+        $inputs = $request->all();
+
+        $user = User::find($id);
+        if (Hash::check($inputs['pass_last'], $user['password'])) {
+            $user->update([
+                'password' => Hash::make($inputs['newPassword']),
+            ]);
+
+            Alert::success('Contraseña', 'Contraseña cambiada exitosamente');
+            return redirect()->route('user.edit', $id);
+        }else{
+            Alert::error('Error', 'La contraseña actual no counside.');
+            return redirect()->route('user.edit', $id);
+        }
+
     }
 
     /**

@@ -86,7 +86,7 @@ class AsignController extends Controller
                 "DateAsign" => $fecha_hora->format('Y-m-d'),
                 "User1" => $input['user1'],
                 "User2" => $input['user2'],
-                "User3" => $input['user3'],
+                // "User3" => $input['user3'],
                 'State1'=>  0,
                 'State2'=>  0,
                 'State3'=>  0,
@@ -111,7 +111,7 @@ class AsignController extends Controller
                         DetalleConteos3::create([
                             "Conteo_id" => $conteo['id'],
                             "Copia_id" => $val['id'],
-                            "State" => 0,
+                            "State" => 1,
                         ]);
                         $cop = CopiaWMS::where('id', $val['id'])->update([
                             'State' => 1,
@@ -142,7 +142,7 @@ class AsignController extends Controller
                         DetalleConteos3::create([
                             "Conteo_id" => $conteo['id'],
                             "Copia_id" => $values['id'],
-                            "State" => 0,
+                            "State" => 1,
                         ]);
                         $cop = CopiaWMS::where('id', $values['id'])->update([
                             'State' => 1,
@@ -171,7 +171,7 @@ class AsignController extends Controller
                         DetalleConteos3::create([
                             "Conteo_id" => $conteo['id'],
                             "Copia_id" => $values['id'],
-                            "State" => 0,
+                            "State" => 1,
                         ]);
                         $cop = CopiaWMS::where('id', $values['id'])->update([
                             'State' => 1,
@@ -200,7 +200,7 @@ class AsignController extends Controller
                         DetalleConteos3::create([
                             "Conteo_id" => $conteo['id'],
                             "Copia_id" => $values['id'],
-                            "State" => 0,
+                            "State" => 1,
                         ]);
                         $cop = CopiaWMS::where('id', $values['id'])->update([
                             'State' => 1,
@@ -367,5 +367,89 @@ class AsignController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function Asignation3($id)
+    {
+        // dd($id);
+        // $id = strval($id);
+        
+        $job = DB::select("
+            select 
+                A.Conteo_id,
+                A.Copia_id,
+                A.ItemCode as Cod1,
+                A.Amount as cant1,
+                A.Lote as Lote1,
+                A.DateExpiration as Expiration1,
+                b.ItemCode as Cod2,
+                b.Amount as cant2,
+                b.Lote as Lote2,
+                b.DateExpiration as Expiration2
+            from
+            DetalleConteos1 A INNER JOIN DetalleConteos2 b ON a.Conteo_id = b.Conteo_id and a.id = b.id
+            where (a.ItemCode <> b.ItemCode or a.Amount <> b.Amount or a.Lote <> b.lote or a.DateExpiration <> b.DateExpiration) and a.Conteo_id =
+        ".$id);
+
+        // $job = json_decode( json_encode($job),true);
+
+        // dd($job);
+
+        if ($job !== []) {
+            foreach ($job as $key => $value) {
+                $conteo = $value->Conteo_id;
+                $copia = $value->Copia_id;
+    
+                $chage = DetalleConteos3::where('Conteo_id', $conteo)->where('Copia_id', $copia)
+                ->update([
+                    'State' => 0,
+                ]);
+            }
+            $detalle = Conteos::select(
+                'Conteos.id as id_cont',
+                'Conteos.State3 as StateCont', 
+                'Conteos.Model_id', 
+                'DetalleConteos3.State as StateLine',
+                'CopiaWMS.*'
+                )
+            ->join('DetalleConteos3', 'Conteos.id', '=', 'DetalleConteos3.Conteo_id')
+            ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
+            ->where('Conteos.id', $id)
+            ->where('DetalleConteos3.State', 0)
+            ->get();
+    
+            $detalle = json_decode( json_encode($detalle),true);
+
+            // dd($detalle);
+            
+            $usuarios = User::all();
+            $usuarios = json_decode( json_encode( $usuarios),true);
+            
+            $TipoConteo = ModelosRecuento::all();
+            $TipoConteo = json_decode( json_encode( $TipoConteo),true);
+    
+            return view('pages.administrador.stractWMS.FormAsignC3', compact('id','usuarios', 'TipoConteo','detalle'));
+        }else {
+            
+            $changeState = Conteos::find($id)->update([
+                'State3' => 1,
+            ]);
+
+            Alert::warning('Conteo 3', 'No es necesario Realizar un tercer conteo');
+            return redirect()->route('asignar.index');
+
+        }
+    }
+
+    public function storeAs3(Request $request, $id)
+    {
+        $items = $request->all();
+        // dd($id);
+
+        $asign = Conteos::where('id', $id)->update([
+            'User3'=>$items['user3'],
+        ]);
+
+        return redirect()->route('asignar.index');
     }
 }

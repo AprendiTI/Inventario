@@ -35,6 +35,10 @@ Route::resources([
     'conteos' => ConteosController::class,
 ]);
 
+
+Route::get('/Asignc3/{id}', [AsignController::class, 'Asignation3'])->name('Asignc3');
+Route::post('/storeAs3/{id}', [AsignController::class, 'storeAs3'])->name('storeAs3');
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/contar/{id}', [HomeController::class, 'edit'])->name('contar');
 
@@ -45,3 +49,6 @@ Route::get('/lista/{id}', [ContController::class, 'Lista'])->name('lista');
 Route::get('/change/{id}', [ConteosController::class, 'ChangeState'])->name('changestate');
 
 Route::get('/infomes', [InformesController::class, 'index'])->name('informes');
+
+
+Route::post('/updatePass/{id}', [UserController::class, 'updatePass'])->name('updatePass');

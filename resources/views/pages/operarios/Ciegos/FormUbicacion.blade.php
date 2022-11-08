@@ -10,7 +10,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        <a class="btn btn-sm btn-outline-dark" href="{{url('/')}}/lista/{{$id}}">Ver lista</a>
+                        {{-- <a class="btn btn-sm btn-outline-dark" href="{{url('/')}}/lista/{{$id}}">Ver lista</a> --}}
                         Ciego
                     </h2>
                     <ul class="nav navbar-right panel_toolbox">

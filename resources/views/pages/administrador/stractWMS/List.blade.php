@@ -36,43 +36,68 @@
                                         </thead>
                                         <tbody>
                                             @foreach($mytable as $key => $val)
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{$val['id']}}</td>
                                                     @foreach($TipoConteo as $TC)
                                                         @if($TC['Id'] == $val['Model_id'])
                                                             <td>{{$TC['Model']}}</td>
                                                         @endif
                                                     @endforeach
-                                                    @foreach($usuarios as $us1)
-                                                        @if($us1['id'] == $val['User1'])
-                                                            <td>{{$us1['name']}}</td>
-                                                        @endif
-                                                    @endforeach
-                                                    @foreach($usuarios as $us2)
-                                                        @if($us2['id'] == $val['User2'])
-                                                            <td>{{$us2['name']}}</td>
-                                                        @endif
-                                                    @endforeach
-                                                    @foreach($usuarios as $us3)
-                                                        @if($us3['id'] == $val['User3'])
-                                                            <td>{{$us3['name']}}</td>
-                                                        @endif
-                                                    @endforeach
-                                                    <td class="text-center">
+                                                    @if(isset($val['User1']))
+                                                        @foreach($usuarios as $us1)
+                                                            @if($us1['id'] == $val['User1'])
+                                                                <td>{{$us1['name']}}</td>
+                                                            @endif
+                                                        @endforeach
+                                                    @else 
+                                                        <td>Sin asignar</td>
+                                                    @endif
+
+                                                    @if(isset($val['User2']))
+                                                        @foreach($usuarios as $us2)
+                                                            @if($us2['id'] == $val['User2'])
+                                                                <td>{{$us2['name']}}</td>
+                                                            @endif
+                                                        @endforeach
+                                                    @else 
+                                                        <td>
+                                                            Sin asignar
+                                                        </td>
+                                                    @endif
+
+
+                                                    @if(isset($val['User3']))
+                                                        @foreach($usuarios as $us3)
+                                                            @if($us3['id'] == $val['User3'])
+                                                                <td>{{$us3['name']}}</td>
+                                                            @endif
+                                                        @endforeach
+                                                    @else 
+                                                        <td>
+                                                            @if(($val['State1']== 1 && $val['State2']== 1) && $val['State3']== 0)
+                                                                <a class="btn btn-sm btn-outline-dark" href="{{route('Asignc3', $val['id'])}}">
+                                                                    Asignar
+                                                                </a>
+                                                            @else 
+                                                                Sin asignar
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                    <td>
                                                         @if($val['State1']== 0)
                                                             <span class="badge rounded-pill text-bg-danger">Sin contar</span>
                                                         @else 
                                                             <span class="badge rounded-pill text-bg-success">Contado</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         @if($val['State2']== 0)
                                                             <span class="badge rounded-pill text-bg-danger">Sin contar</span>
                                                         @else 
                                                             <span class="badge rounded-pill text-bg-success">Contado</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         @if($val['State3']== 0)
                                                             <span class="badge rounded-pill text-bg-danger">Sin contar</span>
                                                         @else 

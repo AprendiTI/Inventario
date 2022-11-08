@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row">
+                            <div class="row justify-content-around">
                                 <div class="col-12 col-md-4 py-4 pl-3">
                                     <label for="user1">Usuario conteo 1 <b style="color: red;"> *</b></label>
                                     <select id="user1" class="form-control selectnormal" name="user1" required>
@@ -56,15 +56,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-4 py-4 pl-3">
-                                    <label for="user3">Usuario conteo 3 <b style="color: red;"> *</b></label>
-                                    <select id="user3" class="form-control selectnormal" name="user3" required>
+                                {{-- <div class="col-12 col-md-4 py-4 pl-3">
+                                    <label for="user3">Usuario conteo 3</label>
+                                    <select id="user3" class="form-control selectnormal" name="user3">
                                         <option value=""> </option>
                                         @foreach($usuarios as $user3)
                                             <option value="{{$user3['id']}}">{{$user3['name']}}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

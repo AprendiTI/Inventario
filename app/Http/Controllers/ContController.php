@@ -824,14 +824,19 @@ class ContController extends Controller
                 ->where('CopiaWMS.Location', $inputs['Location'])
                 ->get();
                 
-                $response = json_decode( json_encode($response),true);
+                $response = json_decode(json_encode($response),true);
                 
                 if ($response == []) {
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -868,8 +873,15 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
+                // dd($response);
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -906,8 +918,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c2'){
             $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
@@ -950,8 +967,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -988,8 +1010,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1026,8 +1053,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c3') {
             $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
@@ -1070,8 +1102,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1108,8 +1145,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
+
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1146,8 +1188,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
+                $BarCodes = [];
+                foreach ($response as $key => $val) {
+                    array_push($BarCodes, $val['BarCode']);
+                }
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response'));
+
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
         }
     }

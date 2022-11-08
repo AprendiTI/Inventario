@@ -37,6 +37,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
     <link href="{{url('/')}}/css/custom.css" rel="stylesheet">
+    
     <style>
       
      body{
@@ -126,7 +127,7 @@
                         {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right text-light" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="javascript:;"> Perfil </a>
+                      <a class="dropdown-item"  href="{{route('user.edit', Auth::user()->id)}}"> Perfil </a>
                       <a class="dropdown-item"  href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();">
@@ -161,6 +162,7 @@
 
     <!-- jQuery -->
     <script src="{{url('/')}}/vendors/jquery/dist/jquery.min.js"></script>
+    
     <!-- Bootstrap -->
    <script src="{{url('/')}}/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- FastClick -->
@@ -171,6 +173,7 @@
     <script src="{{url('/')}}/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
     {{-- sweetalert --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
     
     <!-- iCheck -->
@@ -191,7 +194,6 @@
     <script src="{{url('/')}}/vendors/jszip/dist/jszip.min.js"></script>
     <script src="{{url('/')}}/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="{{url('/')}}/vendors/pdfmake/build/vfs_fonts.js"></script>
-
 
     <script>
       

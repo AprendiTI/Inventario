@@ -17,32 +17,27 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <div class="row">
-                        <h3 class="text-center">
-                            Bienvenido {{ Auth::user()->Rol_id == 1 ? "Administrador" : "Operario"}} {{ Auth::user()->name }} tu cuentas con {{$total > 1 ? $total." Conteos" : $total." conteo"}} por realizar.
-                        </h3>
-                        <div class="col-12 text-center">
-                            <div class="row justify-content-center">
-                                <div class="tile_count d-flex justify-content-center">
-                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
-                                        <div class="col-md-2 col-sm-4">
-                                            <span class="count_top"><i class="fa fa-user"></i> Conteo N°1</span>
-                                            <div class="count">{{$WMS1}}</div>
-                                        </div>
-                                    </a>
-                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
-                                        <div class="col-md-2 col-sm-4">
-                                            <span class="count_top"><i class="fa fa-clock-o"></i> Conteo N°2</span>
-                                            <div class="count">{{$WMS2}}</div>
-                                        </div>
-                                    </a>
-                                    <a class="tile_stats_count" href="{{route('conteos.index')}}">
-                                        <div class="col-md-2 col-sm-4">
-                                            <span class="count_top"><i class="fa fa-user"></i> Conteo N°3</span>
-                                            <div class="count green">{{$WMS3}}</div>
-                                        </div>
-                                    </a>
-                                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h3 class="text-center">
+                                Bienvenido {{ Auth::user()->Rol_id == 1 ? "Administrador" : "Operario"}} {{ Auth::user()->name }} tu cuentas con {{$total == 1 ? $total." conteo" : $total." conteos"}} por realizar.
+                            </h3>
+                        </div>
+
+                        <div class="row justify-content-center" style="display: inline-block;" >
+                            <div class="tile_count">
+                                <a href="{{route('conteos.index')}}" class="col-md-2 col-sm-4  tile_stats_count">
+                                    <div class="count_top"><i class="fa fa-clock-o"></i> Conteo N°1</div>
+                                    <div class="count">{{$WMS1}}</div>
+                                </a>
+                                <a href="{{route('conteos.index')}}" class="col-md-2 col-sm-4  tile_stats_count">
+                                    <span class="count_top"><i class="fa fa-clock-o"></i> Conteo N°2</span>
+                                    <div class="count">{{$WMS2}}</div>
+                                </a>
+                                <a href="{{route('conteos.index')}}" class="col-md-2 col-sm-4  tile_stats_count">
+                                    <span class="count_top"><i class="fa fa-user"></i> Conteo N°3</span>
+                                    <div class="count green">{{$WMS3}}</div>
+                                </a>
                             </div>
                         </div>
                     </div>
