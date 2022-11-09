@@ -367,7 +367,7 @@
                 let key = 0;
                 for(let ProductosL of arregloProd) {
                     $("#productos").append(`
-                        <option value="${arregloCodes[key]}">${ProductosL}</option>
+                        <option value="${arregloCodes[key]}">${arregloCodes[key]}--${ProductosL}</option>
                             
                     `);
                     key+=1;

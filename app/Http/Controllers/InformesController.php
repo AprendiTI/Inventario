@@ -38,7 +38,6 @@ class InformesController extends Controller
             ->leftjoin('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
             ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
             ->where('Conteos.State1', 1)
-            ->where('Conteos.State2', 1)
             ->get();
             
             $informec1 = json_decode( json_encode($informec1),true);
@@ -84,6 +83,7 @@ class InformesController extends Controller
             ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
             ->where('Conteos.State1', 1)
             ->where('Conteos.State2', 1)
+            ->where('Conteos.State3', 1)
             ->where('DetalleConteos3.Amount', '<>', '')
             ->get();
             

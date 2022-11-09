@@ -44,6 +44,7 @@
                                                         <th>Lote</th>
                                                         <th>Fecha vencimiento</th>
                                                         <th>Cantidad actual</th>
+                                                        <th>Ubicación</th>
         
                                                         <th>Usuario Ejecutor</th>
                                                         <th>Vencimiento 1</th>
@@ -65,6 +66,7 @@
                                                             <td>{{$val['Lote']}}</td>
                                                             <td>{{$val['DateExpiration']}}</td>
                                                             <td>{{round($val['Amount'])}}</td>
+                                                            <td>{{$val['Location']}}</td>
         
                                                             @foreach($usuarios as $us3)
                                                                 @if($us3['id'] == $val['User1'])

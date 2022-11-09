@@ -75,14 +75,14 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Lote <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Lote']}}" name="Lote" readonly>
+                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Lote']}}" name="Lote" >
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align">Fecha de vencimiento <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input id="birthday" class="date-picker form-control" name="fecha" value="{{$artc['DateExpiration']}}" readonly  placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                                            <input id="birthday" class="date-picker form-control" name="fecha" value="{{$artc['DateExpiration']}}"  placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                                             <script>
                                                 function timeFunctionLong(input) {
                                                     setTimeout(function() {
@@ -96,7 +96,14 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Cantidad <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="" name="Amount">
+                                            <input type="numeric" id="first-name" required="required" class="form-control " value="" name="Amount">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-3 col-sm-3 ">Comentarios
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
                                         </div>
                                     </div>
 

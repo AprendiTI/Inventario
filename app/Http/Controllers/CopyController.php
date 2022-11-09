@@ -87,6 +87,7 @@ class CopyController extends Controller
                     'Location'=> $ubi,
                     'Compartment'=> $tabla['UDC'],
                     'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
                     'State' => 0,
                 ]);
             }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('Conteo_id')->references('id')->on('Conteos');
             $table->unsignedBigInteger('Copia_id');
             $table->foreign('Copia_id')->references('id')->on('CopiaWMS');
+            $table->String('Comments', 100)->nullable();
             $table->String('ItemCode', 50)->nullable();
             $table->double('Amount', 11,3)->nullable();
             $table->String('Lote', 50)->nullable();

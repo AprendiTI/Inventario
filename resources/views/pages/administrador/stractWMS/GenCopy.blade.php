@@ -25,11 +25,15 @@
                                         <thead class="table-dark">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Producto</th>
+                                                <th>Codigo Articulo</th>
+                                                <th>Nombre Articulo</th>
+                                                <th>Codigo Barras</th>
                                                 <th>Lote</th>
                                                 <th>Fecha Vencimiento</th>
+                                                <th>Cantidad</th>
                                                 <th>Ubicacion</th>
                                                 <th>Fecha Copia</th>
+                                                <th>Hora Copia</th>
                                                 <th>Estado</th>
                                             </tr>
                                         </thead>
@@ -37,11 +41,15 @@
                                             @foreach($TableCopy as $key => $val)
                                                 <tr>
                                                     <td>{{$key}}</td>
+                                                    <td>{{$val['ItemCode']}}</td>
                                                     <td>{{$val['Description']}}</td>
+                                                    <td>{{$val['BarCode']}}</td>
                                                     <td>{{$val['Lote']}}</td>
                                                     <td>{{$val['DateExpiration']}}</td>
+                                                    <td>{{$val['Amount']}}</td>
                                                     <td>{{$val['Location']}}</td>
                                                     <td>{{$val['DateCopy']}}</td>
+                                                    <td>{{$val['HourCopy']}}</td>
                                                     <td>
                                                         @if($val['State']== 0)
                                                             <span class="badge rounded-pill text-bg-secondary">Copiado</span>

@@ -38,11 +38,14 @@
                                 <input type="text" class="form-control" placeholder="Codigo de barras" aria-label="Codigo de barras" aria-describedby="CodeBar" id="code_bar" autofocus onchange="lector()">
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondary" onclick="Mostrar()"> <i class="fa fa-eye"></i> </button>
+                        </div>
                     </div>
                     {{-- <input type="text" id="code_bar" onchange="lector()"> --}}
                     @foreach($response as $key => $artc)
                         <br />
-                        <div class="d-none" id="{{$artc['BarCode']}}">
+                        <div class="contenedor d-none {{$artc['BarCode']}}" >
                             <form method="post" action="{{route('conteos.update', $artc['d_id'])}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                 @csrf
                                 @method('put')
@@ -86,14 +89,14 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Lote <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Lote']}}" name="Lote" readonly>
+                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Lote']}}" name="Lote">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align">Fecha de vencimiento <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input id="birthday" class="date-picker form-control" name="fecha" value="{{$artc['DateExpiration']}}" readonly  placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                                            <input id="birthday" class="date-picker form-control" name="fecha" value="{{$artc['DateExpiration']}}"  placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                                             <script>
                                                 function timeFunctionLong(input) {
                                                     setTimeout(function() {
@@ -107,7 +110,14 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Cantidad <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="{{round($artc['Amount'])}}" name="Amount">
+                                            <input type="numeric" id="first-name" required="required" class="form-control " value="{{round($artc['Amount'])}}" name="Amount">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-3 col-sm-3 label-align">Comentarios
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
                                         </div>
                                     </div>
     
@@ -143,7 +153,7 @@
             let incluye = codigos.includes(barcode);
 
             if (incluye) {
-                $("#"+barcode).removeClass('d-none');
+                $("."+barcode).removeClass('d-none');
                 $("#code_bar").val('');
                 $("#code_bar").focus();
             }else {
@@ -159,6 +169,10 @@
                 $("#code_bar").val('');
                 $("#code_bar").focus();
             }
+        }
+
+        function Mostrar() {
+            $(".contenedor").removeClass('d-none');
         }
       
     </script>

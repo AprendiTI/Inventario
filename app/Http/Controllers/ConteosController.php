@@ -438,6 +438,7 @@ class ConteosController extends Controller
 
             if ($_SESSION['NCONTEO'] == "c1") {
                 DetalleConteos1::where('id', $id)->update([
+                    'Comments' => $input['Coments'],
                     'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
@@ -450,6 +451,7 @@ class ConteosController extends Controller
 
             }elseif ($_SESSION['NCONTEO'] == "c2") {
                 DetalleConteos2::where('id', $id)->update([
+                    'Comments' => $input['Coments'],
                     'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
@@ -464,6 +466,7 @@ class ConteosController extends Controller
 
             }else if ($_SESSION['NCONTEO'] == "c3") {
                 DetalleConteos3::where('id', $id)->update([
+                    'Comments' => $input['Coments'],
                     'ItemCode' => $input['ItemCode'],
                     'Amount' => $input['Amount'],
                     'Lote' => $input['Lote'],
