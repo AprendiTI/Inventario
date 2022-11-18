@@ -25,43 +25,21 @@
                         <table  class="table table-hover tbl">
                             <thead>
                               <tr>
-                                <th>#</th>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
                                 <th>Zona</th>
                                 <th>Pasillo</th>
                                 <th>Ubicacion</th>
-                                <th>Estado Linea</th>
-                                <th>Acciones</th>
                               </tr>
                             </thead>
                             <tbody>
                                 @foreach($response as $key => $prod)
                                     <tr>
-                                        <th scope="row">{{$key}}</th>
-                                        <td>{{$prod['ItemCode']}}</td>
-                                        <td>{{$prod['Description']}}</td>
                                         <td>{{$prod['Zone']}}</td>
                                         <td>{{$prod['Hallway']}}</td>
                                         <td>{{$prod['Location']}}</td>
-                                        <td class="text-center">
-                                            @if($prod['State_line'] == 0)
-                                                <span class="badge rounded-pill text-bg-danger">Por contar</span>
-                                            @endif
-                                        </td>
-                                        <td><a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        @if($NR == 0)
-                            <div class="ln_solid"></div>
-                            <div class=" row">
-                                <div class="col-md-6 col-sm-6 offset-md-3">
-                                    <a href="{{route('changestate', $prod['id'])}}" class="btn btn-success">Finalizar</a>
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>

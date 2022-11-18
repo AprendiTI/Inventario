@@ -24,12 +24,12 @@ class UserSeeder extends Seeder
             'password' => bcrypt('C0rr30.2023'),
         ]);
         
-        User::create([
-            'name' => 'Camilo',
-            'email' => 'aprendiz.ti@ivanagro.com',
-            'state' => '1',
-            'rol_id' => '2',
-            'password' => bcrypt('1000568741'),
-        ]);
+        // User::create([
+        //     'name' => 'Camilo',
+        //     'email' => 'aprendiz.ti@ivanagro.com',
+        //     'state' => '1',
+        //     'rol_id' => '2',
+        //     'password' => bcrypt('1000568741'),
+        // ]);
     }
 }

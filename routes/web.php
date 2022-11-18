@@ -45,6 +45,15 @@ Route::get('/contar/{id}', [HomeController::class, 'edit'])->name('contar');
 Route::get('/Ubicaciones/{id}/{ncount}', [ContController::class, 'FormUbi'])->name('Ubicaciones');
 Route::post('/searchubi/{id}', [ContController::class, 'ubiSearch'])->name('buscarUbicacion');
 
+
+Route::get('/newprod/{id}', [ContController::class, 'FormNewProd'])->name('newprod');
+Route::post('/storenewprod/{id}', [ContController::class, 'storeNewProd'])->name('storenewprod');
+
+Route::post('/countAgre/{id}', [ContController::class, 'countAgre'])->name('countAgre');
+Route::get('/formnew/{id}', [ContController::class, 'Agre'])->name('formnew');
+Route::post('/StoreAgre/{id}', [ContController::class, 'StoreAgre'])->name('StoreAgre');
+
+
 Route::get('/lista/{id}', [ContController::class, 'Lista'])->name('lista');
 Route::get('/change/{id}', [ConteosController::class, 'ChangeState'])->name('changestate');
 

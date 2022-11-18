@@ -10,6 +10,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
+                        Guiado
                         @if($NR !== 0)
                             <a class="btn btn-sm btn-outline-dark" href="{{url('/')}}/lista/{{$id}}">Ver lista</a>
                         @endif

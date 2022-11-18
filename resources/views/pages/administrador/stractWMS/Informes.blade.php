@@ -38,6 +38,7 @@
                                             <table class="table table-striped table-hover table-bordered nowrap tbl" cellspacing="0" width="100%">
                                                 <thead class="table-dark">
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Tipo Conteo</th>
                                                         <th>Codigo</th>
                                                         <th>Nombre</th>
@@ -45,6 +46,7 @@
                                                         <th>Fecha vencimiento</th>
                                                         <th>Cantidad actual</th>
                                                         <th>Ubicación</th>
+                                                        <th>Nuevo</th>
         
                                                         <th>Usuario Ejecutor</th>
                                                         <th>Vencimiento 1</th>
@@ -56,6 +58,7 @@
                                                 <tbody>
                                                     @foreach($informec1 as $key => $val)
                                                         <tr>
+                                                            <td>{{$val['idConteo']}}</td>
                                                             @foreach($TipoConteo as $TC)
                                                                 @if($TC['Id'] == $val['Model_id'])
                                                                     <td>{{$TC['Model']}}</td>
@@ -67,6 +70,7 @@
                                                             <td>{{$val['DateExpiration']}}</td>
                                                             <td>{{round($val['Amount'])}}</td>
                                                             <td>{{$val['Location']}}</td>
+                                                            <td>{{$val['New']}}</td>
         
                                                             @foreach($usuarios as $us3)
                                                                 @if($us3['id'] == $val['User1'])
@@ -89,12 +93,15 @@
                                             <table class="table table-striped table-hover table-bordered nowrap tbl" cellspacing="0" width="100%">
                                                 <thead class="table-dark">
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Tipo Conteo</th>
                                                         <th>Codigo</th>
                                                         <th>Nombre</th>
                                                         <th>Lote</th>
                                                         <th>Fecha vencimiento</th>
                                                         <th>Cantidad actual</th>
+                                                        <th>Ubicación</th>
+                                                        <th>Nuevo</th>
         
                                                         <th>Usuario Ejecutor</th>
                                                         <th>Vencimiento 2</th>
@@ -106,6 +113,7 @@
                                                 <tbody>
                                                     @foreach($informec2 as $key => $val)
                                                         <tr>
+                                                            <td>{{$val['idConteo']}}</td>
                                                             @foreach($TipoConteo as $TC)
                                                                 @if($TC['Id'] == $val['Model_id'])
                                                                     <td>{{$TC['Model']}}</td>
@@ -116,6 +124,8 @@
                                                             <td>{{$val['Lote']}}</td>
                                                             <td>{{$val['DateExpiration']}}</td>
                                                             <td>{{round($val['Amount'])}}</td>
+                                                            <td>{{$val['Location']}}</td>
+                                                            <td>{{$val['New']}}</td>
         
                                                             @foreach($usuarios as $us3)
                                                                 @if($us3['id'] == $val['User2'])
@@ -138,12 +148,15 @@
                                             <table class="table table-striped table-hover table-bordered nowrap tbl" cellspacing="0" width="100%">
                                                 <thead class="table-dark">
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Tipo Conteo</th>
                                                         <th>Codigo</th>
                                                         <th>Nombre</th>
                                                         <th>Lote</th>
                                                         <th>Fecha vencimiento</th>
                                                         <th>Cantidad actual</th>
+                                                        <th>Ubicación</th>
+                                                        <th>Nuevo</th>
         
                                                         <th>Usuario Ejecutor</th>
                                                         <th>Vencimiento 3</th>
@@ -155,6 +168,7 @@
                                                 <tbody>
                                                     @foreach($informec3 as $key => $val)
                                                         <tr>
+                                                            <td>{{$val['idConteo']}}</td>
                                                             @foreach($TipoConteo as $TC)
                                                                 @if($TC['Id'] == $val['Model_id'])
                                                                     <td>{{$TC['Model']}}</td>
@@ -165,6 +179,8 @@
                                                             <td>{{$val['Lote']}}</td>
                                                             <td>{{$val['DateExpiration']}}</td>
                                                             <td>{{round($val['Amount'])}}</td>
+                                                            <td>{{$val['Location']}}</td>
+                                                            <td>{{$val['New']}}</td>
         
                                                             @foreach($usuarios as $us3)
                                                                 @if($us3['id'] == $val['User3'])

@@ -208,6 +208,34 @@ class AsignController extends Controller
                     }
                 }
             }
+            if (isset($input["random"])) {
+                $registros = CopiaWMS::all()->count();
+                $registros = json_decode( json_encode($registros),true);
+
+                for ($i=0; $i < 6; $i++) { 
+                    $numero = rand(1, $registros);
+                    // dd($numero);
+                    
+                    DetalleConteos1::create([
+                        "Conteo_id" => $conteo['id'],
+                        "Copia_id" => $numero,
+                        "State" => 0,
+                    ]);
+                    DetalleConteos2::create([
+                        "Conteo_id" => $conteo['id'],
+                        "Copia_id" => $numero,
+                        "State" => 0,
+                    ]);
+                    DetalleConteos3::create([
+                        "Conteo_id" => $conteo['id'],
+                        "Copia_id" => $numero,
+                        "State" => 1,
+                    ]);
+                    $cop = CopiaWMS::where('id', $numero)->update([
+                        'State' => 1,
+                    ]);
+                }
+            }
             // else{
 
             //     foreach($input["Zona"] as $key => $value){

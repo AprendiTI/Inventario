@@ -19,22 +19,22 @@
                 </div>
                 <div class="x_content">
                     
-                    <div class="row justify-content-center">
+                    {{-- <div class="row justify-content-center">
                         <div class="col-md-7">
                             <div class="input-group flex-nowrap">
                                 <span class="input-group-text" id="CodeBar"> <i class="fa fa-barcode"></i> </span>
                                 <input type="text" class="form-control" placeholder="Codigo de barras" aria-label="Codigo de barras" aria-describedby="CodeBar" id="code_bar" autofocus onchange="lector()">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     @foreach($response as $key => $artc)
                         <br />
-                        <div class="d-none" id="{{$artc['BarCode']}}">
+                        <div class="" id="{{$artc['BarCode']}}">
                             <form method="post" action="{{route('conteos.update', $artc['d_id'])}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                 @csrf
                                 @method('put')
-                                <h5 class="text-center pb-4 text-danger">Producto N° {{$key+1}}</h5>
+                                <h5 class="text-center pb-4 text-danger">Producto N° {{$key+1}} </h5>
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Zona <span class="required">*</span>
                                         </label>
@@ -56,25 +56,35 @@
                                             <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Location']}}" name="Location" readonly>
                                         </div>
                                     </div>
+
+                                    {{-- --------------------Segunda parte----------- --}}
+
                                     <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">cogido del artículo <span class="required">*</span>
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="codebar">cogido de barras <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['ItemCode']}}" name="ItemCode" readonly>
+                                            <input type="text" id="codebar" onkeyup="lector()" required="required" class="form-control " value="" name="CodeBar">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Nombre del artículo <span class="required">*</span>
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="itemCode">Codigo del artículo <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="{{$artc['Description']}}" name="Description" readonly>
+                                            <input type="text" id="itemCode" required="required" class="form-control " value="" name="ItemCode">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Lote <span class="required">*</span>
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="description">Nombre del artículo <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="first-name" required="required" class="form-control " value="" name="Lote">
+                                            <input type="text" id="description" required="required" class="form-control " value="" name="Description">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Lote">Lote <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input type="text" id="Lote" required="required" class="form-control " value="" name="Lote">
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -99,12 +109,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-md-3 col-sm-3 ">Comentarios
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Comentarios
                                         </label>
-                                        <div class="col-md-9 col-sm-9 ">
+                                        <div class="col-md-6 col-sm-6">
                                             <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
                                         </div>
                                     </div>
+
+
 
                                 <div class=" row">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
@@ -127,33 +139,49 @@
 
     <script>
         var codigos = <?php echo json_encode($BarCodes)?>;
-        
-            $("#code_bar").focus();
+        var prods = <?php echo json_encode($productos) ?>;
+        $("#code_bar").focus();
 
+        console.log(codigos);
 
         function lector() {
 
-            let barcode = $("#code_bar").val();
+            let barcode = $("#codebar").val();
 
             let incluye = codigos.includes(barcode);
 
+            console.log(incluye);
             if (incluye) {
-                $("#"+barcode).removeClass('d-none');
-                $("#code_bar").val('');
-                $("#code_bar").focus();
-            }else {
-                codigos.forEach(element => {
-                    $("#"+element).addClass('d-none');
-                });
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    html: `<b>Producto no encontrado en esta ubicación.</b>`,
-                })
-
-                $("#code_bar").val('');
-                $("#code_bar").focus();
+                $("#itemCode").val('');
+                $("#description").val('');
+                $("#itemCode").prop('readonly', false);
+                $("#description").prop('readonly', false);
+                for(let articulo of prods){
+                    if (barcode == articulo['CODIGO_BARRAS']) {
+                        $("#itemCode").val(articulo['ART_ARTICOLO']);
+                        $("#description").val(articulo['Descripcion']);
+                        $("#itemCode").prop('readonly', true);
+                        $("#description").prop('readonly', true);
+                    }
+                }
             }
+            // if (incluye) {
+            //     $("#"+barcode).removeClass('d-none');
+            //     $("#code_bar").val('');
+            //     $("#code_bar").focus();
+            // }else {
+            //     codigos.forEach(element => {
+            //         $("#"+element).addClass('d-none');
+            //     });
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Error',
+            //         html: `<b>Producto no encontrado en esta ubicación.</b>`,
+            //     })
+
+            //     $("#code_bar").val('');
+            //     $("#code_bar").focus();
+            // }
         }
       
     </script>

@@ -86,6 +86,7 @@ class CopyController extends Controller
                     'Hallway'=> $tabla['Nombre_Pasillo'],
                     'Location'=> $ubi,
                     'Compartment'=> $tabla['UDC'],
+                    'New' => 'no',
                     'DateCopy' => $fecha_hora->format('Y-m-d'),
                     'HourCopy' => $fecha_hora->format('H:i:s'),
                     'State' => 0,

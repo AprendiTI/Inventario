@@ -23,6 +23,7 @@ class CopiaWMS extends Model
         'Hallway',
         'Location',
         'Compartment',
+        'New',
         'DateCopy',
         'State',
     ];

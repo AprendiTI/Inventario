@@ -48,7 +48,9 @@
                         <div class="contenedor d-none {{$artc['BarCode']}}" >
                             <form method="post" action="{{route('conteos.update', $artc['d_id'])}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                 @csrf
-                                @method('put')
+                                <div id="metodo">
+                                    @method('put')
+                                </div>
                                 <h5 class="text-center pb-4 text-danger">Producto N° {{$key+1}}</h5>
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Zona <span class="required">*</span>
@@ -113,17 +115,20 @@
                                             <input type="numeric" id="first-name" required="required" class="form-control " value="{{round($artc['Amount'])}}" name="Amount">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-md-3 col-sm-3 label-align">Comentarios
+                                    <div class="item form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Comentarios
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
                                             <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
                                         </div>
                                     </div>
     
-                                <div class=" row">
+                                <div class=" row pt-3 pt-md-0">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <button type="submit" class="btn btn-success">Finalizar</button>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="button" id="agre" onclick="saveAgre()" class="btn btn-success">finalizar y agregar nuevo</button>
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
@@ -160,19 +165,53 @@
                 codigos.forEach(element => {
                     $("#"+element).addClass('d-none');
                 });
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    html: `<b>Producto no encontrado en esta ubicación.</b>`,
+                
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
                 })
 
-                $("#code_bar").val('');
-                $("#code_bar").focus();
+                swalWithBootstrapButtons.fire({
+                title: 'Producto',
+                text: "¡Este producto no es el que corresponde a esta ubicación!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Reintentar',
+                cancelButtonText: 'Agregar',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#code_bar").val('');
+                    $("#code_bar").focus();
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    let id = <?php echo $id ?>;
+                    console.log(id);
+                    let url = "{{route('newprod', "${id}")}}"
+                    $(location).attr('href', url)
+                }
+                })
+                
+
             }
         }
 
         function Mostrar() {
             $(".contenedor").removeClass('d-none');
+        }
+
+        function saveAgre() {
+            $("#metodo").html(``);
+            let id = <?php echo $id?>;
+            let url = "{{route('countAgre', "${id}")}}";
+            $("#demo-form2").attr('action', url)
+            $("#demo-form2").submit();
+
         }
       
     </script>

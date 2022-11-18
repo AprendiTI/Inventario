@@ -93,7 +93,7 @@
                 <div class="row justify-content-end">
                     <div class="col-4">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-dark" type="submit">Finalizar</button>
+                            <button class="btn btn-dark" type="submit">Asignar</button>
                         </div>
                     </div>
                     <div class="col-2">

@@ -15,6 +15,7 @@ class DetalleConteos3 extends Model
     protected $fillable = [
         'Conteo_id',
         'Copia_id',
+        'Comments',
         'Amount',
         'Lote',
         'DateExpiration',

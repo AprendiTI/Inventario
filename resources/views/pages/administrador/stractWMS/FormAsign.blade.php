@@ -98,6 +98,9 @@
                                         <li class="nav-item py-2">
                                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#panelUbicaciones" role="tab" aria-controls="contact" aria-selected="false">Ubicación</a>
                                         </li>
+                                        <li class="nav-item py-2">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#panelRandom" role="tab" aria-controls="contact" aria-selected="false">Random</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="panelZonas" role="tabpanel" aria-labelledby="zonas-tab">
@@ -113,7 +116,7 @@
                                         <div class="tab-pane fade" id="panelZonas_pasillos" role="tabpanel" aria-labelledby="zonas-pasillos-tab">
                                             <div class="row justify-content-center">
                                                 <div class="col-10 py-3">
-                                                    <label for="zona_pasillo" class="form-label">Zonas.</label>
+                                                    <label for="zona_pasillo" class="form-label">Zonas y pasillos.</label>
                                                     <select class="form-select multiple-select-field" id="zona_pasillo" name="zona_pasillo[]" data-placeholder="Seleccionar Zona-Pasillo" style="width: 100%" multiple>
                                                         
                                                     </select>
@@ -136,6 +139,24 @@
                                                     <label for="por_zona" class="form-label">Ubicaciones.</label>
                                                     <select class="form-select multiple-select-field" id="por_ubicacion" name="ubicacion[]" data-placeholder="Seleccionar Zona" style="width: 100%" multiple>
                                                         
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="panelRandom" role="tabpanel" aria-labelledby="ubicaciones-tab">
+                                            <div class="row justify-content-center">
+                                                <div class="col-10 py-3">
+                                                    <label for="por_zona" class="form-label">random.</label>
+                                                    
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="random">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Enviar conteo radom</label>
+                                                </div>
+                                                    {{-- <div class="">
+                                                        <label>
+                                                            <input type="checkbox" class="js-switch" name="random" checked /> Checked
+                                                        </label>
+                                                    </div> --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -400,26 +421,5 @@
             }
             ubicacionesf();
             
-        // function check_all() {
-        //     let check = $('#check-all').prop('checked');
-        //     console.log(check);
-        //     if (check) {
-                
-        //         $("#tabla").find("tr").each(function (idx, row) {
-        //             id = $(this).attr('id');
-        //             if (idx >= 0) {
-        //                 let ubi = $("#check-"+id).prop('checked', true);
-        //             }
-        //         });
-        //     }else{
-        //         $('#check-all').prop('checked', false)
-        //         $("#tabla").find("tr").each(function (idx, row) {
-        //             id = $(this).attr('id');
-        //             if (idx >= 0) {
-        //                 let ubi = $("#check-"+id).prop('checked', false);
-        //             }
-        //         });
-        //     }
-        // }
     </script>
 @endsection

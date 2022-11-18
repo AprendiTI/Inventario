@@ -3,7 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conteos;
+use App\Models\CopiaWMS;
+use App\Models\DetalleConteos1;
+use App\Models\DetalleConteos2;
+use App\Models\DetalleConteos3;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ContController extends Controller
@@ -795,6 +802,19 @@ class ContController extends Controller
             $tipoc = $tipoc[0]['Model_id'];
             // dd($detalleRes);
             if($tipoc == 1){
+
+                $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+                FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+                
+                $productos = json_decode( json_encode($productos),true);
+                
+                $BarCodes = [];
+                foreach ($productos as $key => $val) {
+                    array_push($BarCodes, $val['CODIGO_BARRAS']);
+                }
+
+                // dd($BarCodes);
+
                 $response = Conteos::select(
                     'Conteos.id',
                     'Conteos.User1 as u1',
@@ -830,13 +850,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                $BarCodes = [];
-                foreach ($response as $key => $val) {
-                    array_push($BarCodes, $val['BarCode']);
-                }
+                // $BarCodes = [];
+                // foreach ($response as $key => $val) {
+                //     array_push($BarCodes, $val['BarCode']);
+                // }
 
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','productos', 'response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1196,6 +1216,609 @@ class ContController extends Controller
 
                 return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
             }
+        }
+    }
+
+    public function FormNewProd($id)
+    {
+        // dd($id);
+
+        session_start();        
+        if($_SESSION['NCONTEO'] == 'c1') {
+            $detalle = DetalleConteos1::select(
+                "DetalleConteos1.*"
+                ,"CopiaWMS.Zone"
+                ,"CopiaWMS.Hallway"
+                ,"CopiaWMS.Location"
+                )
+            ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos1.Copia_id')
+            ->where('DetalleConteos1.id', '=', $id)
+            ->get();
+
+            $detalle = json_decode( json_encode($detalle),true);
+            // dd($detalle);
+
+            $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+            FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+            
+            $productos = json_decode( json_encode($productos),true);
+            // dd($productos);
+
+            return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
+
+
+        }elseif ($_SESSION['NCONTEO'] == 'c2'){     
+                $detalle = DetalleConteos2::select(
+                    "DetalleConteos2.*"
+                    ,"CopiaWMS.Zone"
+                    ,"CopiaWMS.Hallway"
+                    ,"CopiaWMS.Location"
+                    )
+                ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos2.Copia_id')
+                ->where('DetalleConteos2.id', '=', $id)
+                ->get();
+    
+                $detalle = json_decode( json_encode($detalle),true);
+                // dd($detalle);
+    
+                $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+                FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+                
+                $productos = json_decode( json_encode($productos),true);
+                // dd($productos);
+    
+                return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
+    
+    
+        }elseif ($_SESSION['NCONTEO'] == 'c3') {  
+            $detalle = DetalleConteos3::select(
+                "DetalleConteos3.*"
+                ,"CopiaWMS.Zone"
+                ,"CopiaWMS.Hallway"
+                ,"CopiaWMS.Location"
+                )
+            ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos3.Copia_id')
+            ->where('DetalleConteos3.id', '=', $id)
+            ->get();
+
+            $detalle = json_decode( json_encode($detalle),true);
+            // dd($detalle);
+
+            $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+            FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+            
+            $productos = json_decode( json_encode($productos),true);
+            // dd($productos);
+
+            return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
+
+        }
+    }
+    
+    public function storeNewProd(Request $request, $id)
+    {
+        // dd($id);
+        $input = $request->all();
+        // dd($input);
+        $desc = '';
+
+        if (isset($input['Description'])) {
+            $desc = $input['Description'];
+        }elseif (isset($input['ItemName'])) {
+            $desc = $input['ItemName'];
+        }
+        
+        $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
+
+        session_start();        
+        if($_SESSION['NCONTEO'] == 'c1') {
+
+            DB::beginTransaction();
+                $det = DetalleConteos1::find($id);
+
+                $det->update([
+                    'Comments' => "Se reemplazo un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                    'ItemCode' => "N/A",
+                    'Amount' => 0,
+                    'Lote' => "N/A",
+                    'DateExpiration' => '',
+                    'State' => 1,
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+
+        }elseif ($_SESSION['NCONTEO'] == 'c2'){     
+
+            DB::beginTransaction();
+                $det = DetalleConteos2::find($id);
+
+                $det->update([
+                    'Comments' => "Se reemplazo un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                    'ItemCode' => "N/A",
+                    'Amount' => 0,
+                    'Lote' => "N/A",
+                    'DateExpiration' => '',
+                    'State' => 1,
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+        }elseif ($_SESSION['NCONTEO'] == 'c3') {  
+
+            DB::beginTransaction();
+                $det = DetalleConteos3::find($id);
+
+                $det->update([
+                    'Comments' => "Se reemplazo un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                    'ItemCode' => "N/A",
+                    'Amount' => 0,
+                    'Lote' => "N/A",
+                    'DateExpiration' => '',
+                    'State' => 1,
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+        }
+    }
+
+    public function countAgre(Request $request, $id)
+    {
+        session_start();
+
+        $input = $request->all();
+
+        DB::beginTransaction();
+
+        if ($_SESSION['NCONTEO'] == 'c1') {
+            DetalleConteos1::where('id', $id)->update([
+                'Comments' => $input['Coments'],
+                'ItemCode' => $input['ItemCode'],
+                'Amount' => $input['Amount'],
+                'Lote' => $input['Lote'],
+                'DateExpiration' => $input['fecha'],
+                'State' => 1,
+            ]);
+
+            $detalle = DetalleConteos1::find($id);
+            $detalle = json_decode(json_encode($detalle), true);
+        } elseif ($_SESSION['NCONTEO'] == 'c2') {
+            DetalleConteos2::where('id', $id)->update([
+                'Comments' => $input['Coments'],
+                'ItemCode' => $input['ItemCode'],
+                'Amount' => $input['Amount'],
+                'Lote' => $input['Lote'],
+                'DateExpiration' => $input['fecha'],
+                'State' => 1,
+            ]);
+
+            $detalle = DetalleConteos2::find($id);
+            $detalle = json_decode(json_encode($detalle), true);
+        } elseif ($_SESSION['NCONTEO'] == 'c3') {
+            DetalleConteos3::where('id', $id)->update([
+                'Comments' => $input['Coments'],
+                'ItemCode' => $input['ItemCode'],
+                'Amount' => $input['Amount'],
+                'Lote' => $input['Lote'],
+                'DateExpiration' => $input['fecha'],
+                'State' => 1,
+            ]);
+
+            $detalle = DetalleConteos3::find($id);
+            $detalle = json_decode(json_encode($detalle), true);
+        }
+
+        DB::commit();
+
+        Alert::success('Conteo', 'detalle contado exitosamente.');
+        return redirect()->route('formnew', $id);
+    }
+
+    public function Agre($id)
+    {
+        // dd($id);
+
+        session_start();        
+        if($_SESSION['NCONTEO'] == 'c1') {
+            $detalle = DetalleConteos1::select(
+                "DetalleConteos1.*"
+                ,"CopiaWMS.Zone"
+                ,"CopiaWMS.Hallway"
+                ,"CopiaWMS.Location"
+                )
+            ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos1.Copia_id')
+            ->where('DetalleConteos1.id', '=', $id)
+            ->get();
+
+            $detalle = json_decode( json_encode($detalle),true);
+            // dd($detalle);
+
+            $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+            FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+            
+            $productos = json_decode( json_encode($productos),true);
+            // dd($productos);
+
+            return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
+
+
+        }elseif ($_SESSION['NCONTEO'] == 'c2'){     
+                $detalle = DetalleConteos2::select(
+                    "DetalleConteos2.*"
+                    ,"CopiaWMS.Zone"
+                    ,"CopiaWMS.Hallway"
+                    ,"CopiaWMS.Location"
+                    )
+                ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos2.Copia_id')
+                ->where('DetalleConteos2.id', '=', $id)
+                ->get();
+    
+                $detalle = json_decode( json_encode($detalle),true);
+                // dd($detalle);
+    
+                $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+                FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+                
+                $productos = json_decode( json_encode($productos),true);
+                // dd($productos);
+    
+                return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
+    
+    
+        }elseif ($_SESSION['NCONTEO'] == 'c3') {  
+            $detalle = DetalleConteos3::select(
+                "DetalleConteos3.*"
+                ,"CopiaWMS.Zone"
+                ,"CopiaWMS.Hallway"
+                ,"CopiaWMS.Location"
+                )
+            ->join('CopiaWMS', 'CopiaWMS.id','=', 'DetalleConteos3.Copia_id')
+            ->where('DetalleConteos3.id', '=', $id)
+            ->get();
+
+            $detalle = json_decode( json_encode($detalle),true);
+            // dd($detalle);
+
+            $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+            FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+            
+            $productos = json_decode( json_encode($productos),true);
+            // dd($productos);
+
+            return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
+
+        }
+    }
+
+    public function StoreAgre(Request $request, $id)
+    {
+        // dd($id);
+        $input = $request->all();
+        // dd($input);
+        $desc = '';
+        if (isset($input['Description'])) {
+            $desc = $input['Description'];
+        }elseif (isset($input['ItemName'])) {
+            $desc = $input['ItemName'];
+        }
+        $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
+
+        session_start();        
+        if($_SESSION['NCONTEO'] == 'c1') {
+
+            DB::beginTransaction();
+                $det = DetalleConteos1::find($id);
+
+                $det->update([
+                    'Comments' => "Se agrego un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                
+                DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+
+        }elseif ($_SESSION['NCONTEO'] == 'c2'){     
+            DB::beginTransaction();
+                $det = DetalleConteos2::find($id);
+
+                $det->update([
+                    'Comments' => "Se agrego un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'Se guardo y se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+
+
+        }elseif ($_SESSION['NCONTEO'] == 'c3') {  
+   
+            DB::beginTransaction();
+                $det = DetalleConteos3::find($id);
+
+                $det->update([
+                    'Comments' => "Se agrego un producto en esta posicon con el codigo: ".$input['ItemCode'],
+                ]);
+                $det = json_decode( json_encode($det),true);
+
+                $detail = $det['Conteo_id'];
+
+                $crearcopia = CopiaWMS::create([
+                    'ItemCode' => $input['ItemCode'],
+                    'Description'=> $desc,
+                    'BarCode'=> $input['barcode'],
+                    'Amount'=> $input['Amount'],
+                    'Lote'=> $input['Lote'],
+                    'DateExpiration'=> $input['Expiration'],
+                    'Zone'=> $input['Zone'],
+                    'Hallway'=> $input['Hallway'],
+                    'Location'=> $input['Location'],
+                    'New' => 'si',
+                    'DateCopy' => $fecha_hora->format('Y-m-d'),
+                    'HourCopy' => $fecha_hora->format('H:i:s'),
+                    'State' => 1,
+                ]);
+                $crearcopia = json_decode( json_encode($crearcopia),true);
+
+                $copi = $crearcopia['id'];
+
+                $creardetalle = DetalleConteos3::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    'Comments' => "producto agregado en posicion.",
+                    "ItemCode" => $input['ItemCode'],
+                    "Amount"=> $input['Amount'],
+                    "Lote"=> $input['Lote'],
+                    "DateExpiration"=> $input['Expiration'],
+                    "State" => 1,
+                ]);
+                
+                DetalleConteos2::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+                DetalleConteos1::create([
+                    "Conteo_id" => $detail,
+                    "Copia_id" => $copi,
+                    "State" => 0,
+                ]);
+            DB::commit();
+            Alert::success('Se agrego', 'Se guardo y se agrego el producto exitosamente.');
+            return redirect()->route('Ubicaciones', [
+                'id' => $detail,
+                'ncount' => $_SESSION['NCONTEO'],
+            ]);
+
         }
     }
 }

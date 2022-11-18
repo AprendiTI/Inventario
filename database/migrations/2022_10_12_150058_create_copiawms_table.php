@@ -24,7 +24,8 @@ return new class extends Migration
             $table->String('Zone', 50);
             $table->String('Hallway', 50);
             $table->String('Location', 50);
-            $table->double('Compartment', 15,0);
+            $table->double('Compartment', 15,0)->nullable();
+            $table->String('New', 10)->nullable();
             $table->Date('DateCopy')->nullable();
             $table->time('HourCopy', $precision = 0)->nullable();
             $table->boolean('State');

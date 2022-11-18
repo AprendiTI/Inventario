@@ -25,14 +25,14 @@ class InformesController extends Controller
         // -------------------CONTEO N° 1-----------------------
 
             $informec1 = Conteos::select(
-                'Conteos.id'
+                'Conteos.id as idConteo'
                 ,'Conteos.Model_id'
                 ,'Conteos.DateAsign'
                 ,'Conteos.User1'
                 ,'DetalleConteos1.Amount as cantidad_1'
                 ,'DetalleConteos1.DateExpiration as Vencimiento_1'
                 ,'DetalleConteos1.Lote as Lote_1'
-
+ 
                 ,'CopiaWMS.*'
             )
             ->leftjoin('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
@@ -45,7 +45,7 @@ class InformesController extends Controller
         // -------------------CONTEO N° 2-----------------------
         
             $informec2 = Conteos::select(
-                'Conteos.id'
+                'Conteos.id as idConteo'
                 ,'Conteos.Model_id'
                 ,'Conteos.DateAsign'
                 ,'Conteos.User2'
@@ -69,7 +69,7 @@ class InformesController extends Controller
 
 
             $informec3 = Conteos::select(
-                'Conteos.id'
+                'Conteos.id as idConteo'
                 ,'Conteos.Model_id'
                 ,'Conteos.DateAsign'
                 ,'Conteos.User3'
@@ -84,7 +84,7 @@ class InformesController extends Controller
             ->where('Conteos.State1', 1)
             ->where('Conteos.State2', 1)
             ->where('Conteos.State3', 1)
-            ->where('DetalleConteos3.Amount', '<>', '')
+            ->where('DetalleConteos3.DateExpiration', '<>', '')
             ->get();
             
             $informec3 = json_decode( json_encode($informec3),true);
@@ -95,9 +95,6 @@ class InformesController extends Controller
             $TipoConteo = ModelosRecuento::all();
             $TipoConteo = json_decode( json_encode( $TipoConteo),true);
 
-            // dd($informec1);
-    
-        // dd($informe);
 
         return view('pages.administrador.stractWMS.Informes', compact('TipoConteo', 'usuarios', 'informec1','informec2','informec3'));
     }
