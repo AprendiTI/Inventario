@@ -53,7 +53,9 @@
                                             @endif
                                         </td>
                                         <td>{{$prod['BarCode']}}</td>
-                                        <td><a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a></td>
+                                        <td>
+                                            <a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
