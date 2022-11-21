@@ -33,7 +33,9 @@
                         <div class="" id="{{$artc['BarCode']}}">
                             <form method="post" action="{{route('conteos.update', $artc['d_id'])}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                 @csrf
-                                @method('put')
+                                <div id="metodo">
+                                    @method('put')
+                                </div>
                                 <h5 class="text-center pb-4 text-danger">Producto N° {{$key+1}} </h5>
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Zona <span class="required">*</span>
@@ -122,6 +124,9 @@
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <button type="submit" class="btn btn-success">Finalizar</button>
                                     </div>
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="button" id="agre" onclick="saveAgre()" class="btn btn-success">finalizar y agregar nuevo</button>
+                                    </div>
                                 </div>
                                 <div class="ln_solid"></div>
 
@@ -182,6 +187,15 @@
             //     $("#code_bar").val('');
             //     $("#code_bar").focus();
             // }
+        }
+        
+        function saveAgre() {
+            $("#metodo").html(``);
+            let id = <?php echo $id?>;
+            let url = "{{route('countAgre', "${id}")}}";
+            $("#demo-form2").attr('action', url)
+            $("#demo-form2").submit();
+
         }
       
     </script>

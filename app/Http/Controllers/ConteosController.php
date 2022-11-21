@@ -576,6 +576,17 @@ class ConteosController extends Controller
         DB::beginTransaction();
 
         if ($_SESSION['NCONTEO'] == 'c1') {
+            // $detalleRes = DetalleConteos1::select('Conteo_id')
+            //     ->where('id', $id)
+            //     ->get();
+            // $detalleRes = json_decode(json_encode($detalleRes), true);
+            // $idConteo = $detalleRes[0]['Conteo_id'];
+            // $tipoc = Conteos::select('Model_id')
+            //     ->where('id', $idConteo)
+            //     ->get();
+            // $tipoc = json_decode(json_encode($tipoc), true);
+            // $tipoc = $tipoc[0]['Model_id'];
+            // dd($tipoc);
             DetalleConteos1::where('id', $id)->update([
                 'Comments' => $input['Coments'],
                 'ItemCode' => $input['ItemCode'],
@@ -588,14 +599,30 @@ class ConteosController extends Controller
             $detalle = DetalleConteos1::find($id);
             $detalle = json_decode(json_encode($detalle), true);
         } elseif ($_SESSION['NCONTEO'] == 'c2') {
-            DetalleConteos2::where('id', $id)->update([
-                'Comments' => $input['Coments'],
-                'ItemCode' => $input['ItemCode'],
-                'Amount' => $input['Amount'],
-                'Lote' => $input['Lote'],
-                'DateExpiration' => $input['fecha'],
-                'State' => 1,
-            ]);
+            
+            // $detalleRes = DetalleConteos2::select('Conteo_id')
+            //     ->where('id', $id)
+            //     ->get();
+            // $detalleRes = json_decode(json_encode($detalleRes), true);
+            // $idConteo = $detalleRes[0]['Conteo_id'];
+            // $tipoc = Conteos::select('Model_id')
+            //     ->where('id', $idConteo)
+            //     ->get();
+            // $tipoc = json_decode(json_encode($tipoc), true);
+            // $tipoc = $tipoc[0]['Model_id'];
+            // dd($tipoc);
+            // if($tipoc == 1) {
+
+            // }else {
+                DetalleConteos2::where('id', $id)->update([
+                    'Comments' => $input['Coments'],
+                    'ItemCode' => $input['ItemCode'],
+                    'Amount' => $input['Amount'],
+                    'Lote' => $input['Lote'],
+                    'DateExpiration' => $input['fecha'],
+                    'State' => 1,
+                ]);
+            // }
 
             $detalle = DetalleConteos2::find($id);
             $detalle = json_decode(json_encode($detalle), true);

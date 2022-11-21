@@ -137,7 +137,7 @@
                   @enderror
                 </div>
                 <div class="d-grid gap-2">
-                  <button class="btn btn-outline-dark" type="submit">Iniciar sección</button>
+                  <button class="btn btn-outline-dark" type="submit">Iniciar sesión</button>
                 </div>
 
                 <div class="clearfix"></div>

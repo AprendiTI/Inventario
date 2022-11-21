@@ -952,6 +952,17 @@ class ContController extends Controller
             $tipoc = $tipoc[0]['Model_id'];
             // dd($detalleRes);
             if($tipoc == 1){
+                
+                $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+                FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+                
+                $productos = json_decode( json_encode($productos),true);
+                
+                $BarCodes = [];
+                foreach ($productos as $key => $val) {
+                    array_push($BarCodes, $val['CODIGO_BARRAS']);
+                }
+
                 $response = Conteos::select(
                     'Conteos.id',
                     'Conteos.User2 as u2',
@@ -987,13 +998,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                $BarCodes = [];
-                foreach ($response as $key => $val) {
-                    array_push($BarCodes, $val['BarCode']);
-                }
+                // $BarCodes = [];
+                // foreach ($response as $key => $val) {
+                //     array_push($BarCodes, $val['BarCode']);
+                // }
 
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'productos', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1087,6 +1098,16 @@ class ContController extends Controller
             $tipoc = $tipoc[0]['Model_id'];
             // dd($detalleRes);
             if($tipoc == 1){
+                $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
+                FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
+                
+                $productos = json_decode( json_encode($productos),true);
+                
+                $BarCodes = [];
+                foreach ($productos as $key => $val) {
+                    array_push($BarCodes, $val['CODIGO_BARRAS']);
+                }
+
                 $response = Conteos::select(
                     'Conteos.id',
                     'Conteos.User3 as u3',
@@ -1122,13 +1143,13 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                $BarCodes = [];
-                foreach ($response as $key => $val) {
-                    array_push($BarCodes, $val['BarCode']);
-                }
+                // $BarCodes = [];
+                // foreach ($response as $key => $val) {
+                //     array_push($BarCodes, $val['BarCode']);
+                // }
 
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'productos', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
