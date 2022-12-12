@@ -11,7 +11,7 @@
                 @csrf
 
                 <div class="row mb-3">
-                    <label for="name" class="col-md-4 col-form-label text-md-end">Nombre</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-end">Nombre <b style="color: red;">*</b> </label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control rounded-1 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
@@ -25,10 +25,10 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="email" class="col-md-4 col-form-label text-md-end">Correo</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-end">Correo <b style="color: red;">*</b> </label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control rounded-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
+                        <input id="email" type="text" class="form-control rounded-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
 
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -39,11 +39,10 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="password" class="col-md-4 col-form-label text-md-end">Contraseña</label>
+                    <label for="password" class="col-md-4 col-form-label text-md-end">Contraseña <b style="color: red;">*</b> </label>
 
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control rounded-1 @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
-
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -53,14 +52,24 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Confirmacion de contraseña</label>
+                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Confirmación de contraseña <b style="color: red;">*</b> </label>
 
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control rounded-1" name="password_confirmation" autocomplete="new-password">
+                        <div id="passwordHelpBlock" class="">
+                           La contraseña debe incluir por lo menos:
+                           <ul>
+                            <li>Cinco caracteres.</li>
+                            <li>Una letra mayuscula.</li>
+                            <li>Una letra minuscula.</li>
+                            <li>Un numero.</li>
+                            <li>Un caracter especial (* - $ # % &).</li>
+                           </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="Rol" class="col-md-4 col-form-label text-md-end">Rol</label>
+                    <label for="Rol" class="col-md-4 col-form-label text-md-end">Rol <b style="color: red;">*</b> </label>
 
                     <div class="col-md-6">
                         <select class="form-select @error('Rol_id') is-invalid @enderror" name="Rol_id" id="Rol">

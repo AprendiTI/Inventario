@@ -28,6 +28,7 @@
                                 <th>Zona</th>
                                 <th>Pasillo</th>
                                 <th>Ubicacion</th>
+                                <th>Estado Linea</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -36,6 +37,13 @@
                                         <td>{{$prod['Zone']}}</td>
                                         <td>{{$prod['Hallway']}}</td>
                                         <td>{{$prod['Location']}}</td>
+                                        <td class="text-center">
+                                            @if($prod['State_line'] == 0)
+                                                <span class="badge rounded-pill text-bg-danger">Por contar</span>
+                                            @else 
+                                                <span class="badge rounded-pill text-bg-success">Contador</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

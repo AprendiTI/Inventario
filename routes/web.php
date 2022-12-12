@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContController;
 use App\Http\Controllers\InformesController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,9 @@ Route::resources([
 ]);
 
 
+
+
+
 Route::get('/Asignc3/{id}', [AsignController::class, 'Asignation3'])->name('Asignc3');
 Route::post('/storeAs3/{id}', [AsignController::class, 'storeAs3'])->name('storeAs3');
 
@@ -57,7 +61,11 @@ Route::post('/StoreAgre/{id}', [ContController::class, 'StoreAgre'])->name('Stor
 Route::get('/lista/{id}', [ContController::class, 'Lista'])->name('lista');
 Route::get('/change/{id}', [ConteosController::class, 'ChangeState'])->name('changestate');
 
+
 Route::get('/infomes', [InformesController::class, 'index'])->name('informes');
+Route::post('/export', [InformesController::class, 'export'])->name('export');
 
 
-Route::post('/updatePass/{id}', [UserController::class, 'updatePass'])->name('updatePass');
+Route::get('/edit/{id}', [ProfileController::class, 'edit'])->name('edit');
+Route::post('/storeEdit/{id}', [ProfileController::class, 'update'])->name('storeEdit');
+Route::post('/updatePass/{id}', [ProfileController::class, 'updatePass'])->name('updatePass');

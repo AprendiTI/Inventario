@@ -128,7 +128,7 @@
                   @enderror
               </div>
                 <div>
-                  <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Contraseña"  name="password" required >
+                  <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Contraseña"  name="password">
                   
                   @error('password')
                       <span class="invalid-feedback" role="alert">

@@ -86,13 +86,28 @@
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="rol">Rol <span class="required">*</span>
-                            </label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" id="rol" disabled name="estado"value="{{$usuario['Rol_id'] == 1 ? 'Administrado' : 'Operario'}}" class="form-control">
+                        @if ( Auth::user()->Rol_id == 1)
+                            
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Zonas <span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9  ">
+                                    <select class="form-control" name="rol">
+                                        <option>Seleccionar</option>
+                                        @foreach($roles as $key => $rol)
+                                            <option value="{{$rol['Id']}}">{{$rol['Rol']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @else 
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="rol">Rol <span class="required">*</span>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" id="rol" disabled name="rol" value="{{$usuario['Rol_id'] == 1 ? 'Administrado' : 'Operario'}}" class="form-control">
+                                </div>
+                            </div>
+                        @endif
                         <div class="ln_solid"></div>
                         <div class="row pt-4 pt-md-0 justify-content-end">
                             <div class="col-auto offset-md-3">
@@ -124,13 +139,6 @@
                     <form action="{{route('updatePass', $usuario['id'])}}" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                         @csrf
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-4 col-sm-4 label-align" for="password_last">Contraseña actual <span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 col-sm-8 ">
-                                <input type="password" id="password_last" name="pass_last" value="{{old('pass_last')}}" class="form-control  @error('pass_last') is-invalid @enderror">
-                            </div>
-                        </div>
                         @error('pass_last')
                             <div class="alert alert-danger">
                                 <strong>{{ $message }}</strong>
@@ -153,8 +161,19 @@
                             </label>
                             <div class="col-md-8 col-sm-8 ">
                                 <input id="newPassword_confirmation" class="form-control" name="newPassword_confirmation" value="{{old('newPassword_confirmation')}}" type="password">
+                                <div id="passwordHelpBlock" class="">
+                                    La contraseña debe incluir por lo menos:
+                                    <ul>
+                                     <li>Cinco caracteres</li>
+                                     <li>Una letra mayuscula</li>
+                                     <li>Una letra minuscula</li>
+                                     <li>Un numero</li>
+                                     <li>Un caracter especial (* - $ # % &)</li>
+                                    </ul>
+                                 </div>
                             </div>
                         </div>
+                        
                         <div class="ln_solid"></div>
                         <div class="row pt-4 pt-md-0 justify-content-end">
                             <div class="col-auto  offset-md-3">

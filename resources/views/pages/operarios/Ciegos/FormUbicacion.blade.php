@@ -10,8 +10,8 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Ciego
                         <a class="btn btn-sm btn-outline-dark" href="{{url('/')}}/lista/{{$id}}">Ver lista</a>
+                        Ciego
                     </h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
@@ -24,7 +24,7 @@
                     <form method="post" action="{{url('/')}}/searchubi/{{$id}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">Zonas</label>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">Zonas <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 ">
                                 <select class="form-control" name="Zone">
                                     <option>Seleccionar</option>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">Pasillos</label>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">Pasillos <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 ">
                                 <select class="form-control" name="Hallway">
                                     <option>Seleccionar</option>
@@ -46,10 +46,27 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="location">Codigo Ubicación <span class="required">*</span>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">Ubicaciones <span class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <select class="form-control  @error('Location') is-invalid @enderror" name="Location">
+                                    <option>Seleccionar</option>
+                                    @foreach($ubi as $key => $ubication)
+                                        <option value="{{$ubication}}">{{$ubication}}</option>
+                                    @endforeach
+                                </select>
+                                
+                                @error('Location')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="location">Confirmación Codigo Ubicación <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input type="text" id="location" required="required" class="form-control " value="" name="Location">
+                                <input type="text" id="location" class="form-control " value="" name="Location_confirmation">
                             </div>
                         </div>
                         <div class="ln_solid"></div>

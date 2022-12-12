@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\formUbicacion;
 use App\Models\Conteos;
 use App\Models\CopiaWMS;
 use App\Models\DetalleConteos1;
@@ -54,7 +55,7 @@ class ContController extends Controller
                 ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos1.State', 0)
+                // ->where('DetalleConteos1.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -87,7 +88,6 @@ class ContController extends Controller
                 ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos1.State', 0)
                 ->get();
                 
                 $NR = $response->where('State_line', 0)->count();
@@ -119,7 +119,6 @@ class ContController extends Controller
                 ->join('DetalleConteos1', 'Conteos.id',"=", "DetalleConteos1.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos1.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos1.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -153,7 +152,6 @@ class ContController extends Controller
                 ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos2.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -186,7 +184,6 @@ class ContController extends Controller
                 ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos2.State', 0)
                 ->get();
                 
                 $NR = $response->where('State_line', 0)->count();
@@ -218,7 +215,6 @@ class ContController extends Controller
                 ->join('DetalleConteos2', 'Conteos.id',"=", "DetalleConteos2.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos2.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos2.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -252,7 +248,6 @@ class ContController extends Controller
                 ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos3.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -285,7 +280,6 @@ class ContController extends Controller
                 ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos3.State', 0)
                 ->get();
                 
                 $NR = $response->where('State_line', 0)->count();
@@ -317,7 +311,6 @@ class ContController extends Controller
                 ->join('DetalleConteos3', 'Conteos.id',"=", "DetalleConteos3.Conteo_id")
                 ->join('CopiaWMS', 'CopiaWMS.id', '=', 'DetalleConteos3.Copia_id')
                 ->where('Conteos.id', $id)
-                ->where('DetalleConteos3.State', 0)
                 ->get();
 
                 $NR = $response->where('State_line', 0)->count();
@@ -386,8 +379,15 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
 
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
@@ -420,8 +420,6 @@ class ContController extends Controller
                 
                 $response = json_decode( json_encode($response),true);
 
-                // dd($response);
-
                 $zonas = [];
                 foreach ($response as $key => $value) {
                     $zona = $value['Zone'];
@@ -437,8 +435,16 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -485,8 +491,15 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }
         }elseif ($ncount == 'c2'){
             if($tipoc == 1){
@@ -536,7 +549,16 @@ class ContController extends Controller
                     }
                 }
 
-                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
+                
+
+                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
 
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
@@ -569,8 +591,6 @@ class ContController extends Controller
                 
                 $response = json_decode( json_encode($response),true);
 
-                // dd($response);
-
                 $zonas = [];
                 foreach ($response as $key => $value) {
                     $zona = $value['Zone'];
@@ -587,7 +607,15 @@ class ContController extends Controller
                     }
                 }
 
-                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
+
+                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -634,8 +662,16 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }
         }elseif ($ncount == 'c3') {
             if($tipoc == 1){
@@ -684,8 +720,16 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Ciegos.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
 
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
@@ -718,8 +762,6 @@ class ContController extends Controller
                 
                 $response = json_decode( json_encode($response),true);
 
-                // dd($response);
-
                 $zonas = [];
                 foreach ($response as $key => $value) {
                     $zona = $value['Zone'];
@@ -735,8 +777,16 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Guiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -783,24 +833,31 @@ class ContController extends Controller
                         $pasillos[] = $pasillo;
                     }
                 }
+                
+                $ubi = [];
+                foreach ($response as $key => $value) {
+                    $ubicacion = $value['Location'];
+                    if (!in_array($ubicacion, $ubi)) {
+                        $ubi[] = $ubicacion;
+                    }
+                }
 
-                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR','response', 'zonas', 'pasillos'));
+                return view('pages.operarios.Semiguiados.FormUbicacion', compact('id','NR', 'ubi', 'response', 'zonas', 'pasillos'));
             }
         }
 
     }
 
-    public function ubiSearch(Request $request, $id)
+    public function ubiSearch(formUbicacion $request, $id)
     {
         $inputs = $request->all();
-        // dd($inputs);
         
         session_start();        
         if($_SESSION['NCONTEO'] == 'c1') {
             $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
             $tipoc = json_decode( json_encode($tipoc),true);
             $tipoc = $tipoc[0]['Model_id'];
-            // dd($detalleRes);
+            
             if($tipoc == 1){
 
                 $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
@@ -812,8 +869,6 @@ class ContController extends Controller
                 foreach ($productos as $key => $val) {
                     array_push($BarCodes, $val['CODIGO_BARRAS']);
                 }
-
-                // dd($BarCodes);
 
                 $response = Conteos::select(
                     'Conteos.id',
@@ -845,18 +900,18 @@ class ContController extends Controller
                 ->get();
                 
                 $response = json_decode(json_encode($response),true);
+
+
                 
                 if ($response == []) {
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                // $BarCodes = [];
-                // foreach ($response as $key => $val) {
-                //     array_push($BarCodes, $val['BarCode']);
-                // }
-
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','productos', 'response', 'BarCodes'));
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id', 'ubicacion', 'productos', 'response', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -898,10 +953,12 @@ class ContController extends Controller
                 foreach ($response as $key => $val) {
                     array_push($BarCodes, $val['BarCode']);
                 }
-
-                // dd($response);
+                
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -942,15 +999,18 @@ class ContController extends Controller
                 foreach ($response as $key => $val) {
                     array_push($BarCodes, $val['BarCode']);
                 }
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
 
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c2'){
             $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
             $tipoc = json_decode( json_encode($tipoc),true);
             $tipoc = $tipoc[0]['Model_id'];
-            // dd($detalleRes);
+            
             if($tipoc == 1){
                 
                 $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
@@ -998,13 +1058,12 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                // $BarCodes = [];
-                // foreach ($response as $key => $val) {
-                //     array_push($BarCodes, $val['BarCode']);
-                // }
 
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'productos', 'BarCodes'));
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'ubicacion',  'productos', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1046,8 +1105,11 @@ class ContController extends Controller
                     array_push($BarCodes, $val['BarCode']);
                 }
 
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1089,14 +1151,17 @@ class ContController extends Controller
                     array_push($BarCodes, $val['BarCode']);
                 }
 
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }
         }elseif ($_SESSION['NCONTEO'] == 'c3') {
             $tipoc = Conteos::select('Model_id')->where('id', $id)->get();
             $tipoc = json_decode( json_encode($tipoc),true);
             $tipoc = $tipoc[0]['Model_id'];
-            // dd($detalleRes);
+            
             if($tipoc == 1){
                 $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
                 FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
@@ -1143,13 +1208,12 @@ class ContController extends Controller
                     Alert::warning('Ubicacion', 'Ubicacion no existente o no se te fue asignada.');
                     return redirect()->back();
                 }
-                // $BarCodes = [];
-                // foreach ($response as $key => $val) {
-                //     array_push($BarCodes, $val['BarCode']);
-                // }
 
                 
-                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id','response', 'productos', 'BarCodes'));
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
+                return view('pages.operarios.Ciegos.FormConteoCiegos', compact('id', 'ubicacion', 'response', 'productos', 'BarCodes'));
             }elseif ($tipoc == 2) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1192,7 +1256,10 @@ class ContController extends Controller
                 }
 
     
-                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id','response', 'BarCodes'));
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
+                return view('pages.operarios.Guiados.FormConteoGuiados', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }elseif ($tipoc == 3) {
                 $response = Conteos::select(
                     'Conteos.id',
@@ -1234,15 +1301,17 @@ class ContController extends Controller
                     array_push($BarCodes, $val['BarCode']);
                 }
 
+                foreach ($response as $key => $val) {
+                    $ubicacion = $val['Location'];
+                }
 
-                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id','response', 'BarCodes'));
+                return view('pages.operarios.Semiguiados.FormConteoSemiG', compact('id', 'ubicacion', 'response', 'BarCodes'));
             }
         }
     }
 
     public function FormNewProd($id)
     {
-        // dd($id);
 
         session_start();        
         if($_SESSION['NCONTEO'] == 'c1') {
@@ -1257,13 +1326,11 @@ class ContController extends Controller
             ->get();
 
             $detalle = json_decode( json_encode($detalle),true);
-            // dd($detalle);
 
             $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
             FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
             
             $productos = json_decode( json_encode($productos),true);
-            // dd($productos);
 
             return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
 
@@ -1286,7 +1353,6 @@ class ContController extends Controller
                 FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
                 
                 $productos = json_decode( json_encode($productos),true);
-                // dd($productos);
     
                 return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
     
@@ -1303,13 +1369,11 @@ class ContController extends Controller
             ->get();
 
             $detalle = json_decode( json_encode($detalle),true);
-            // dd($detalle);
 
             $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
             FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
             
             $productos = json_decode( json_encode($productos),true);
-            // dd($productos);
 
             return view('pages.operarios.FormGen.FormNewProd', compact('id', 'detalle', 'productos'));
 
@@ -1318,9 +1382,8 @@ class ContController extends Controller
     
     public function storeNewProd(Request $request, $id)
     {
-        // dd($id);
         $input = $request->all();
-        // dd($input);
+        
         $desc = '';
 
         if (isset($input['Description'])) {
@@ -1576,8 +1639,6 @@ class ContController extends Controller
 
     public function Agre($id)
     {
-        // dd($id);
-
         session_start();        
         if($_SESSION['NCONTEO'] == 'c1') {
             $detalle = DetalleConteos1::select(
@@ -1591,13 +1652,11 @@ class ContController extends Controller
             ->get();
 
             $detalle = json_decode( json_encode($detalle),true);
-            // dd($detalle);
 
             $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
             FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
             
             $productos = json_decode( json_encode($productos),true);
-            // dd($productos);
 
             return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
 
@@ -1614,13 +1673,11 @@ class ContController extends Controller
                 ->get();
     
                 $detalle = json_decode( json_encode($detalle),true);
-                // dd($detalle);
     
                 $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
                 FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
                 
                 $productos = json_decode( json_encode($productos),true);
-                // dd($productos);
     
                 return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
     
@@ -1637,13 +1694,11 @@ class ContController extends Controller
             ->get();
 
             $detalle = json_decode( json_encode($detalle),true);
-            // dd($detalle);
 
             $productos = DB::select('SELECT DISTINCT D.ART_ARTICOLO,D.ART_DES AS Descripcion,F.ALT_CODICE_ALTERNATIVO AS CODIGO_BARRAS
             FROM SYSTOREDB.dbo.DAT_ARTICOLI AS D INNER JOIN SYSTOREDB.dbo.DAT_ARTICOLI_ALTCODICI AS F ON F.ALT_ARTICOLO = D.ART_ARTICOLO');
             
             $productos = json_decode( json_encode($productos),true);
-            // dd($productos);
 
             return view('pages.operarios.FormGen.FormAgre', compact('id', 'detalle', 'productos'));
 
@@ -1652,9 +1707,8 @@ class ContController extends Controller
 
     public function StoreAgre(Request $request, $id)
     {
-        // dd($id);
         $input = $request->all();
-        // dd($input);
+        
         $desc = '';
         if (isset($input['Description'])) {
             $desc = $input['Description'];

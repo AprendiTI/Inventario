@@ -56,7 +56,6 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $input = $request->all();
-        // dd($input);
         
         $create = User::create([
             'name' => $input['name'],
@@ -66,6 +65,7 @@ class UserController extends Controller
             'password' => Hash::make($input['password']),
         ]);
 
+        Alert::success('Usuario', 'Usuario Creado exitosamente');
         return redirect()->route('user.index');
     }
 
@@ -89,9 +89,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $usuario = User::find($id);
-        // dd($usuario);
-
-        return view('pages.perfil.Perfil', compact('usuario'));
+        $roles = DB::select('select * from Roles');
+        $roles = json_decode( json_encode( $roles),true);
+        
+        return view('pages.perfil.Perfil', compact('usuario', 'roles'));
     }
 
     /**
@@ -110,6 +111,7 @@ class UserController extends Controller
         $usuario->update([
             'name' => $inputs['name'],
             'email' => $inputs['email'],
+            'Rol_id' => $inputs['rol'],
         ]);
         Alert::success('Perfil', 'Perfil personal actualizado exitosamente.');
         return redirect()->route('user.edit', $id);
@@ -121,17 +123,13 @@ class UserController extends Controller
         $inputs = $request->all();
 
         $user = User::find($id);
-        if (Hash::check($inputs['pass_last'], $user['password'])) {
+        
             $user->update([
                 'password' => Hash::make($inputs['newPassword']),
             ]);
 
             Alert::success('Contraseña', 'Contraseña cambiada exitosamente');
             return redirect()->route('user.edit', $id);
-        }else{
-            Alert::error('Error', 'La contraseña actual no counside.');
-            return redirect()->route('user.edit', $id);
-        }
 
     }
 

@@ -25,7 +25,6 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'pass_last' => ['required'],
             'newPassword' => ['required', 'confirmed', 
                 Password::min(5)
                 ->letters()
@@ -41,7 +40,6 @@ class ChangePasswordRequest extends FormRequest
     public function attributes()
     {
         return [
-            'pass_last'=> ' Contraseña actual ',
             'newPassword'=> ' Nueva contraseña ',
         ];
     }

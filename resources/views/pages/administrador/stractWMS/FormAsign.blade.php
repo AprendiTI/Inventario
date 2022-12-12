@@ -329,6 +329,7 @@
                         }
                     }
                 }
+                arregloZone.sort()
                     // console.log(arregloZone);
                 for(let zonas of arregloZone) {
                     $("#por_zona").append(`
@@ -358,6 +359,8 @@
                     }
                 }
 
+                arregloZP.sort();
+
                 for(let zonasPasillos of arregloZP) {
                     $("#zona_pasillo").append(`
                         <option value="${zonasPasillos}">${zonasPasillos}</option>
@@ -385,7 +388,10 @@
                         }
                     }
                 }
+
                 let key = 0;
+
+
                 for(let ProductosL of arregloProd) {
                     $("#productos").append(`
                         <option value="${arregloCodes[key]}">${arregloCodes[key]}--${ProductosL}</option>
@@ -412,6 +418,8 @@
                         }
                     }
                 }
+
+                arregloUbi.sort()
 
                 for(let ubicaciones of arregloUbi) {
                     $("#por_ubicacion").append(`

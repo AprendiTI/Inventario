@@ -34,7 +34,7 @@
                                 <th>Ubicacion</th>
                                 <th>Estado Linea</th>
                                 <th>Barras</th>
-                                <th>Acciones</th>
+                                {{-- <th>Acciones</th> --}}
                               </tr>
                             </thead>
                             <tbody>
@@ -49,12 +49,14 @@
                                         <td class="text-center">
                                             @if($prod['State_line'] == 0)
                                                 <span class="badge rounded-pill text-bg-danger">Por contar</span>
+                                            @else 
+                                                <span class="badge rounded-pill text-bg-success">Contador</span>
                                             @endif
                                         </td>
                                         <td>{{$prod['BarCode']}}</td>
-                                        <td>
+                                        {{-- <td>
                                             <a class="btn btn-info btn-sm" href="{{route('conteos.edit', $prod['d_id'])}}">Contar</a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

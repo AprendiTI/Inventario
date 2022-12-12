@@ -27,6 +27,7 @@
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Correo</th>
                                             <th scope="col">Rol</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,6 +41,9 @@
                                                             {{$rol['Rol']}}
                                                         @endif
                                                     @endforeach
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{route('user.edit', $user['id'])}}" class=""><i class="fa fa-edit text-danger"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

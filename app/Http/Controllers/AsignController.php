@@ -40,8 +40,6 @@ class AsignController extends Controller
         $TipoConteo = ModelosRecuento::all();
         $TipoConteo = json_decode( json_encode( $TipoConteo),true);
 
-        // dd($mytable);
-        
         return view('pages.administrador.stractWMS.List', compact('mytable', 'usuarios', 'TipoConteo'));
     }
 
@@ -63,7 +61,6 @@ class AsignController extends Controller
         $TipoConteo = ModelosRecuento::all();
         $TipoConteo = json_decode( json_encode( $TipoConteo),true);
 
-        
         return view('pages.administrador.stractWMS.FormAsign', compact('data', 'usuarios', 'TipoConteo'));
     }
 
@@ -76,7 +73,6 @@ class AsignController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        // dd($input);
         
         $fecha_hora = new DateTime("now", new DateTimeZone('America/Bogota'));
         
@@ -153,7 +149,6 @@ class AsignController extends Controller
             if (isset($input["productos"])) {
                 
                 foreach($input['productos'] as $key => $value){
-                    // dd($value);
                     $result = CopiaWMS::all()->where('ItemCode', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"))->where('State', 0);
                     $result = json_decode( json_encode($result),true);
                 
@@ -209,13 +204,26 @@ class AsignController extends Controller
                 }
             }
             if (isset($input["random"])) {
-                $registros = CopiaWMS::all()->count();
-                $registros = json_decode( json_encode($registros),true);
+                $inicio = DB::select('select top 1 id from CopiaWMS where 
+                DateCopy = CONVERT (date, GETDATE())');
+                $inicio = json_decode( json_encode($inicio),true);
+
+                $fin = DB::select('select top 1 id from CopiaWMS where 
+                DateCopy = CONVERT (date, GETDATE()) ORDER BY id DESC');
+                $fin = json_decode( json_encode($fin),true);
+                $ini =$inicio[0]['id'];
+                $fn =$fin[0]['id'];
 
                 for ($i=0; $i < 6; $i++) { 
-                    $numero = rand(1, $registros);
+                    $registros = DB::select('select id from CopiaWMS where 
+                    DateCopy = CONVERT (date, GETDATE()) 
+                    and State = 0
+                    and id = FLOOR(RAND()*('.$fn.'-'.$ini.')+'.$ini.')');
+                    $registros = json_decode( json_encode($registros),true);
+                    $numero = $registros[0]['id'];
+
                     // dd($numero);
-                    
+
                     DetalleConteos1::create([
                         "Conteo_id" => $conteo['id'],
                         "Copia_id" => $numero,
@@ -236,117 +244,6 @@ class AsignController extends Controller
                     ]);
                 }
             }
-            // else{
-
-            //     foreach($input["Zona"] as $key => $value){
-            //         $copi = CopiaWMS::all()->where('Zone', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"))->where('State', 0);
-            //         $copi = json_decode( json_encode($copi),true);
-            //         foreach ($copi as $key => $val) {
-            //             DetalleConteos1::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $val['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos2::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $val['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos3::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $val['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             $cop = CopiaWMS::where('id', $val['id'])->update([
-            //                 'State' => 1,
-            //             ]);
-            //         }
-            //     }
-                
-            //     foreach($input['zona_pasillo'] as $key => $value){
-                    
-            //         $param = explode("-", $value);
-
-            //         $result = CopiaWMS::all()->where('Zone', $param[0])->where('Hallway', $param[1])->where('DateCopy', $fecha_hora->format("Y-m-d"))->where('State', 0);
-            //         $result = json_decode( json_encode($result),true);
-                
-            //         foreach ($result as $key => $values) {
-            //             DetalleConteos1::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos2::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos3::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             $cop = CopiaWMS::where('id', $values['id'])->update([
-            //                 'State' => 1,
-            //             ]);
-            //         }
-            //     }
-                
-            //     foreach($input['productos'] as $key => $value){
-
-            //         $result = CopiaWMS::all()->where('ItemCode', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"))->where('State', 0);
-            //         $result = json_decode( json_encode($result),true);
-                
-            //         foreach ($result as $key => $values) {
-            //             DetalleConteos1::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos2::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos3::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             $cop = CopiaWMS::where('id', $values['id'])->update([
-            //                 'State' => 1,
-            //             ]);
-            //         }
-            //     }
-                
-            //     foreach($input['ubicacion'] as $key => $value){
-
-            //         $result = CopiaWMS::all()->where('Location', $value)->where('DateCopy', $fecha_hora->format("Y-m-d"))->where('State', 0);
-            //         $result = json_decode( json_encode($result),true);
-                
-            //         foreach ($result as $key => $values) {
-            //             DetalleConteos1::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos2::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             DetalleConteos3::create([
-            //                 "Conteo_id" => $conteo['id'],
-            //                 "Copia_id" => $values['id'],
-            //                 "State" => 0,
-            //             ]);
-            //             $cop = CopiaWMS::where('id', $values['id'])->update([
-            //                 'State' => 1,
-            //             ]);
-            //         }
-            //     }
-
-            // }
         DB::commit();
         Alert::success('Asignado', 'Conteo asignado exitosamente.');
         return redirect()->route('asignar.index');
@@ -419,10 +316,6 @@ class AsignController extends Controller
             where (a.ItemCode <> b.ItemCode or a.Amount <> b.Amount or a.Lote <> b.lote or a.DateExpiration <> b.DateExpiration) and a.Conteo_id =
         ".$id);
 
-        // $job = json_decode( json_encode($job),true);
-
-        // dd($job);
-
         if ($job !== []) {
             foreach ($job as $key => $value) {
                 $conteo = $value->Conteo_id;
@@ -447,8 +340,6 @@ class AsignController extends Controller
             ->get();
     
             $detalle = json_decode( json_encode($detalle),true);
-
-            // dd($detalle);
             
             $usuarios = User::all();
             $usuarios = json_decode( json_encode( $usuarios),true);
@@ -472,7 +363,6 @@ class AsignController extends Controller
     public function storeAs3(Request $request, $id)
     {
         $items = $request->all();
-        // dd($id);
 
         $asign = Conteos::where('id', $id)->update([
             'User3'=>$items['user3'],

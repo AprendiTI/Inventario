@@ -9,8 +9,10 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Formulario de conteo ciego
-                        <a href="{{url()->previous()}}" class="btn btn-outline-dark btn-sm" type="button">Volver</a></h2>
+                    <h2>
+                        <a href="{{url()->previous()}}" class="btn btn-outline-dark btn-sm" type="button">Volver</a>
+                        Formulario de conteo ciego
+                    </h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up text-dark"></i></a>
                         </li>
@@ -110,13 +112,21 @@
                                             <input type="numeric" id="first-name" required="required" class="form-control " value="" name="Amount">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    
+                                    <div class="item form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Comentarios
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="item form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align">Comentarios
                                         </label>
                                         <div class="col-md-6 col-sm-6">
                                             <textarea class="form-control" rows="3" name="Coments" placeholder=""></textarea>
-                                        </div>
-                                    </div>
+                                        </div> --}}
+                                    {{-- </div> --}}
 
 
 
@@ -147,7 +157,6 @@
         var prods = <?php echo json_encode($productos) ?>;
         $("#code_bar").focus();
 
-        console.log(codigos);
 
         function lector() {
 
@@ -155,7 +164,6 @@
 
             let incluye = codigos.includes(barcode);
 
-            console.log(incluye);
             if (incluye) {
                 $("#itemCode").val('');
                 $("#description").val('');

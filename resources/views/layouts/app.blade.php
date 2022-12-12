@@ -60,7 +60,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{route('home')}}" class="site_title"><img src="{{url('/')}}/images/LogoInd.png" alt="LogoIvanAgro"> <span>IvanAgro</span></a>
+              <a href="{{route('home')}}" class="site_title"><img src="{{url('/')}}/images/LogoInd.png" alt="LogoIvanAgro"> <span>IVANagro</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -86,7 +86,7 @@
                     <li><a href="{{route('user.index')}}"><i class="fa fa-male"></i> Usuarios</span></a>
                     <li><a href="{{route('asignar.index')}}"><i class="fa fa-pencil"></i> Asignación</span></a>
                       <li><a href="{{route('informes')}}"><i class="fa fa-line-chart"></i> Informes</span></a>
-                    <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> conteos</span></a>
+                    <li><a href="{{route('conteos.index')}}"><i class="fa fa-binoculars"></i> Conteos</span></a>
                     </li>
                   </ul>
                 @else
@@ -127,7 +127,7 @@
                         {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right text-light" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="{{route('user.edit', Auth::user()->id)}}"> Perfil </a>
+                      <a class="dropdown-item"  href="{{route('edit', Auth::user()->id)}}"> Perfil </a>
                       <a class="dropdown-item"  href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();">
